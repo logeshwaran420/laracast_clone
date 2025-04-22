@@ -1,0 +1,11 @@
+    .custom-scrollbar::-webkit-scrollbar {
+        height: 8px; /* Slightly bigger scrollbar */
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f0f4ff; /* Softer light blue */
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #93c5fd; /* Softer blue thumb */
+    }
