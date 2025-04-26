@@ -8,17 +8,17 @@ use Illuminate\Http\Request;
 
 class messageController extends Controller
 {
-    public function show($id){
+    public function show(Message $message){
 
-        $message = Message::findOrFail($id);
+      //  $message = Message::findOrFail($id);
            
            
             return view('instructor.message.show', compact('message'));
         
     }
-    public function update($id){
+    public function update(Message $message){
  // Find the message by ID
- $message = Message::findOrFail($id);
+// $message = Message::findOrFail($id);
 
  $message->is_read = 1;
  $message->save();

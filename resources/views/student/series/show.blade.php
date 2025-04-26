@@ -34,7 +34,7 @@
                 <!-- Buttons -->
                 <div class="flex flex-wrap gap-4 mb-6">
                     @if ($lessons->isNotEmpty())
-                    <a href="{{ route('episode', ['slug' => $course->slug, 'position' => $lessons->first()->position]) }}"
+                    <a href="{{ route('episode', [$course, 'lesson' => $lessons->first()->position]) }}"
                     class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded text-sm font-semibold">
                      ▶ Play Series
                  </a>
@@ -69,7 +69,7 @@
                         @foreach ($lessons as $lesson)
                         
               <a href="{{ route('episode',
-               ['slug' => $course->slug, 'position' => $lesson->position]) }}"
+               [$course, 'lesson' => $lesson->position]) }}"
                             class="block">
                             <div class="bg-gray-800 py-6 px-6 rounded-xl flex items-start gap-6 hover:bg-gray-700 transition">
                                 <div class="text-2xl font-bold text-white bg-gray-700 w-14 h-14 flex items-center justify-center rounded-full shrink-0">

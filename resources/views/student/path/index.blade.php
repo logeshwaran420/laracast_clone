@@ -8,6 +8,12 @@
 
 
 <div class="bg-[#0F172A] text-white min-h-screen py-10 px-6 md:px-20">
+  @auth
+  @if (!auth()->user()->subscriptions()->where('is_active', true)->exists())
+  <x-subscription-prompt :user="auth()->id()" />
+  @endif
+@endauth
+      
     <div class="flex flex-col gap-y-20 max-w-6xl mx-auto">
         @foreach ($courses->chunk(3) as $index => $chunk)
         <div class="flex flex-col md:flex-row gap-10">
@@ -46,8 +52,8 @@
                         </p>
                        
                         <div class="flex gap-4 flex-wrap items-center mb-4">
-                            <a href="{{  route('episode', ['slug' => $course->slug,
-                        'position' => $course->lessons->first()->position ?? null]) }}" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 text-sm font-medium inline-block">
+                            <a href="{{  route('episode', [$course,
+                        'lesson' => $course->lessons->first()->position ?? null]) }}" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 text-sm font-medium inline-block">
                                ▶ Play Series
                             </a>
                         </div>

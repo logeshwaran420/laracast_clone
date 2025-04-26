@@ -22,14 +22,16 @@
         :title="$randomCourse->title" 
         :description="$randomCourse->description"
         :playUrl="route('episode', [
-            'slug' => $randomCourse->slug,
-            'position' => $randomCourse->lessons->first()->position
-         ])"
+          'course' => $randomCourse->slug,
+          'lesson' => $randomCourse->lessons->first()->id
+      ])"
+      
     >
         <img src="{{ asset('storage/instructors/' .$instruct->image) }}" alt="Instructor" class="w-56 h-76 shadow-lg">
     </x-course.detail>
 
 </div>
+
 
             <x-heading.sub-head>More Currently Featured</x-heading.sub-head>
 
@@ -43,7 +45,7 @@
     
      
      <x-scroll.section 
-     :href="route('series', ['slug' => $course->slug])"
+      :href="route('series', $course)"
      :title="$course->title"
      img="{{ asset('storage/random_course/three.webp') }}"
  >
@@ -55,7 +57,8 @@
           </x-scroll.scrollbar>
 
 
-          <x-heading.sub-head>World-Class <span class="text-blue-500">Instructors</span></x-heading.sub-head>
+
+  <x-heading.sub-head>World-Class <span class="text-blue-500">Instructors</span></x-heading.sub-head>
 
 <x-scroll.scrollbar>
 
@@ -64,7 +67,7 @@
     
 
 
-<a href="{{ route('instructor',['id' => $instructor->user->id]) }}">
+<a href="{{ route('instructor',['instructor' => $instructor->user->id]) }}">
 <div class="w-80 h-80 relative shadow-md overflow-hidden">
   <img src="{{ asset('storage/instructors/' . $instructor->image) }}" 
   alt="{{ $instructor->user->name }}" 
@@ -81,6 +84,19 @@
 </x-scroll.scrollbar>
 
 
+
+@auth
+@if (!auth()->user()->subscriptions()->where('is_active', true)->exists())
+<x-subscription-prompt :user="auth()->id()" />
+@endif
+@endauth
+
+
+
+
+
+
+
 <x-heading.sub-head >
 Pick a Topic. Any Topic. </x-heading.sub-head>
 
@@ -92,7 +108,7 @@ Pick a Topic. Any Topic. </x-heading.sub-head>
         @foreach ($categories as $category)
             @if ($category->courses->count() > 0)
                 <x-card 
-               :href="route('topics', ['categoryName' => $category->name])"
+               :href="route('topics', ['categoryName' => $category->name]).'#courses'"
                     :name="$category->name" 
                     :course-count="$category->courses->count()" 
                     :video-count="$category->courses->sum(fn($course) => $course->lessons->count())"

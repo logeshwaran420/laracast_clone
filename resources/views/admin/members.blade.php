@@ -20,22 +20,68 @@
      Create Instructor
   </a>
 </div>
-{{-- img="https://picsum.photos/300/200"{{ asset('storage/instructors/' . $instructors->image) }}  --}}
+
 <x-scroll.scrollbar>
     @foreach ($instructor as $instruct)
+
 @php
   $ins = $instruct->instructor
 @endphp
 
     <x-scroll.img-section
       img="{{ asset('storage/instructors/' . $ins->image) }} " 
-        :href="route('admin.members.index', ['id' => $instruct->id])"
+        :href="route('admin.members.index', ['user' => $instruct->id])"
         :name="$instruct->name"
         description=""
 
       />
     @endforeach
   </x-scroll.scrollbar>
+
+
+
+
+  <x-heading.sub-head>Member Plus</x-heading.sub-head>
+
+
+  <x-scroll.scrollbar>
+
+  @foreach($subscribedUsers as $subscribedUser)
+
+<x-scroll.img-section
+
+    img="{{ vite::asset('resources/images/profile.png') }}"
+    :href="route('admin.members.show',['user' => $subscribedUser->id])" 
+    :name="$subscribedUser->name"
+    description=""
+  />
+
+@endforeach
+
+</x-scroll.scrollbar>
+
+
+
+
+
+
+<x-heading.sub-head> Guest Mode</x-heading.sub-head>
+<x-scroll.scrollbar>
+
+  @foreach($unsubscribedUsers as $unsubscribedUser)
+
+<x-scroll.img-section
+
+    img="{{ vite::asset('resources/images/profile.png') }}"
+    :href="route('admin.members.show2',['user' => $unsubscribedUser->id])"
+    :name="$unsubscribedUser->name"
+    description=""
+  />
+
+@endforeach
+
+</x-scroll.scrollbar>
+
 
 
 

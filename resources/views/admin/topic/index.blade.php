@@ -16,7 +16,7 @@
           
           
                     <x-card 
-                   :href="route('admin.topics.show', ['catId' => $category->id])"
+                   :href="route('admin.topics.show', $category)"
                         :name="$category->name" 
                         :course-count="$category->courses->count() " 
                         :video-count="$category->courses->sum(fn($course) => $course->lessons->count())"
@@ -44,7 +44,7 @@
 
 
                 <div class="flex justify-end mb-6 gap-4">
-                    <a href="{{ route("admin.topics.create",["id" => $tag->id]) }}"
+                    <a href="{{ route("admin.topics.create",$tag) }}"
                        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4">
                       Add Category
                     </a>

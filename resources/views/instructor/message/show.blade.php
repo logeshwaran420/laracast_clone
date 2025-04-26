@@ -13,7 +13,7 @@
 shadow-lg border border-gray-700 dark:border-gray-700 transition duration-300 mt-10">
 <div class="flex items-center justify-between mb-4">
   <a 
-    href="{{ route('instructor.courses.show',['slug' => $message->course->slug]) }}" Replace with your actual URL
+    href="{{ route('instructor.courses.show',['course' => $message->course->slug]) }}" Replace with your actual URL
     class="text-2xl font-bold text-gray-200 dark:text-white hover:text-blue-500 hover:underline hover:underline-offset-4 transition"
   >
     {{ $message->subject }}
@@ -52,7 +52,7 @@ shadow-lg border border-gray-700 dark:border-gray-700 transition duration-300 mt
         </a>
       
         <!-- Completed button -->
-        <form action="{{ route('instructor.messages.update', ['id' => $message->id]) }}" method="POST">
+        <form action="{{ route('instructor.messages.update', $message) }}" method="POST">
             @csrf
             @method('PUT') <!-- Make sure to use PUT or PATCH for updates -->
             <button type="submit" class="text-white bg-blue-500 dark:bg-blue-600 hover:bg-blue-600 dark:hover:bg-blue-500 font-medium rounded-md px-4 py-2">

@@ -9,8 +9,7 @@ use App\Models\Course;
 
 class PathController extends Controller
 {
-
-    public function index()
+ public function index()
     {
          $courses = Course::orderBy('shorts')->get();
 

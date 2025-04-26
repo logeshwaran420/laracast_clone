@@ -8,11 +8,13 @@
 </a>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-10">
         
-@foreach ( $courses->where('status','1') as $course )
+@foreach ( $courses as $course )
     <x-scroll.section 
 
                 :href="route('series',$course->slug)" 
-                :title="$course->title">
+                :title="$course->title"
+                img="{{ asset('storage/random_course/one.webp') }}">
+                {{ $course->instructor->name }}
             </x-scroll.section>
 
          

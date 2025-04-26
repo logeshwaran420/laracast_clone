@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 
 use App\Models\Course;
+use App\Models\Subscription;
+use App\Models\User;
 use App\Services\CommonDataService;
 use Illuminate\Http\Request;
 
@@ -46,15 +48,27 @@ class AdminController extends Controller
     }
 
     
-    public function members(){
-
-
-
+    public function members()
+    {
         $data = $this->commonDataService->getCommonData();
-   
-
-        return view("admin.members",$data);
+    
+        $unsubscribedUsers = User::where('role', 'student')
+            ->whereDoesntHave('subscriptions')
+            ->get();
+    
+        $subscribedUsers = User::where('role', 'student')
+            ->whereHas('subscriptions')
+            ->get();
+    
+        
+        $data['unsubscribedUsers'] = $unsubscribedUsers;
+        $data['subscribedUsers'] = $subscribedUsers;
+    
+        
+    
+        return view("admin.members", $data);
     }
+    
 
 
 

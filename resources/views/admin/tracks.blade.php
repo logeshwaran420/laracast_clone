@@ -18,7 +18,7 @@
 <x-scroll.scrollbar>
     @foreach ($tags as $tag)
     <x-scroll.section :title="$tag->name" 
-        :href="route('admin.topics.index',['id' => $tag->id ]) "
+        :href="route('admin.topics.index',$tag) "
         img="{{ asset('storage/random_course/two.webp') }}" 
         />
     @endforeach
@@ -34,7 +34,7 @@
 <x-scroll.scrollbar>
     @foreach ($categories as $category)
     <x-scroll.section :title="$category->name"
-         :href="route('admin.topics.show',['catId' => $category->id])"
+         :href="route('admin.topics.show',$category)"
          
          img="{{ asset('storage/random_course/five.png') }}" 
          />

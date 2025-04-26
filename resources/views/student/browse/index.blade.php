@@ -20,13 +20,13 @@
     <nav class="mt-6 px-10 py-4">
         <ul class="flex space-x-4 text-lg font-semibold text-gray-400 uppercase">
           
-<x-student.subnav-link href="{{ route('browse') }}" :active="!request('tagName')">
+<x-student.subnav-link href="{{ route('browse') }}" :active="!request('tag?')">
     ALL TOPICS
 </x-student.subnav-link>
             @foreach ($tags as $tag)
                 <x-student.subnav-link
-                    href="{{ route('browse', ['tagName' => $tag->name]) }}" 
-                    :active="request()->route('tagName') === $tag->name"
+                    href="{{ route('browse', ['tag' => $tag->name]) }}" 
+                    :active="request()->route('tag') === $tag->name"
                 >
                     {{ $tag->name }}
                 </x-student.subnav-link>
@@ -46,7 +46,7 @@
                         :course-count="$category->courses->count()"
                         :video-count="$category->courses->sum(fn($course) => $course->lessons->count())"
                         :image="asset('storage/images/' . $category->image)" 
-                        :href="route('topics', ['categoryName' => $category->name]). '#courses'"
+                        :href="route('topics', ['category' => $category->name]). '#courses'"
                     />
                 @endif
             @endforeach
@@ -54,7 +54,7 @@
        
         <div id="courses">
     <x-heading.sub-head >
-        Exploring <span class="text-blue-500">{{ request('categoryName') }}</span>
+        Exploring <span class="text-blue-500">{{ request('category?') }}</span>
     </x-heading.sub-head>
 
         @if($courses->isNotEmpty())
@@ -67,6 +67,10 @@
 </div>
 
 
-
+@auth
+@if (!auth()->user()->subscriptions()->where('is_active', true)->exists())
+<x-subscription-prompt :user="auth()->id()" />
+@endif
+@endauth
     </div>
 @endsection

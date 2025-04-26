@@ -11,7 +11,7 @@
 
 <div class="min-h-screen flex items-center justify-center bg-gray-900 px-8 py-12">
 
-<form action="{{ route('admin.topics.update',["catId" => $category->id]) }}" method="POST" enctype="multipart/form-data" class="w-full max-w-4xl space-y-10">
+<form action="{{ route('admin.topics.update',$category) }}" method="POST" enctype="multipart/form-data" class="w-full max-w-4xl space-y-10">
     @csrf
     @method("put")
 

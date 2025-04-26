@@ -18,7 +18,6 @@ class InstructorController extends Controller
     public function dashboard()
     {
         $user = auth()->user();
-    
         $courses = $user->courses()->with('lessons')->orderBy("shorts")->get();
         
         $messages = Message::where('receiver_id', $user->id)->latest()->get();
@@ -31,7 +30,6 @@ $needToFixCount = $messages->where('is_read', '0')->count();
     public function library()
     {
         $user = auth()->user();
-
         // Fetch the courses that belong to the authenticated user
         $courses = $user->courses;
     
@@ -43,8 +41,7 @@ $needToFixCount = $messages->where('is_read', '0')->count();
     public function user() {
         $user = auth()->user();
 
-
-
+      
         $instructor = $user->instructor; 
 
        
@@ -54,8 +51,6 @@ $needToFixCount = $messages->where('is_read', '0')->count();
     public function message()
     {
         $user = auth()->user();
-    
-       
         $messages = $user->receivedMessages()->latest()->with('sender')->get();
        
     $fixedCount = $messages->where('is_read', '1')->count();

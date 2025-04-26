@@ -12,7 +12,7 @@
 
     <!-- Sidebar -->
     <aside class="w-80 bg-gray-800 p-5 overflow-y-auto">
-        <a href="{{ route('series', ['slug' => $course->slug]) }}" 
+        <a href="{{ route('series', $course) }}" 
            class="bg-gray-700 text-white text-sm px-3 py-1 rounded font-medium mb-3 block text-center"
            aria-label="Go to Series Overview">
             ↖ Series Overview
@@ -29,7 +29,7 @@
         @if ($lessons->isNotEmpty())
             <div class="space-y-2 text-sm">
                 @foreach ($lessons as $lesson)
-                    <a href="{{ route('episode', ['slug' => $course->slug, 'position' => $lesson->position]) }}"
+                    <a href="{{ route('episode', [$course, 'lesson' => $lesson->position]) }}"
                        class="flex items-center justify-between px-3 py-2 rounded-lg 
                               {{ optional($currentLesson)->position == $lesson->position ? 'bg-blue-600 font-semibold text-white' : 'hover:bg-gray-700' }}">
                         {{ $lesson->title }}
@@ -40,11 +40,13 @@
             <p class="text-gray-400">No lessons available.</p>
         @endif
     </aside>
-
+    @if ($currentLesson)
     <!-- Main Content -->
     @auth
+    @if (auth()->user()->subscriptions()->where('is_active', true)->exists())
+
     <main class="flex-1 p-6 overflow-y-auto">
-        @if ($currentLesson)
+     
             <!-- Video Player -->
             <div class="aspect-w-16 aspect-h-9 bg-black rounded-xl overflow-hidden shadow mb-8">
                 <video controls class="w-full rounded">
@@ -60,11 +62,7 @@
             <p class="text-gray-300 leading-relaxed mb-8 text-center">
                 {{ $currentLesson->description }}
             </p>
-        @else
-            <div class="text-center text-gray-400 text-lg mt-20">
-                <p>Select a lesson to begin watching.</p>
-            </div>
-        @endif
+       
 
         <div class="max-w-5xl mx-auto mt-12">
             <div class="flex items-start gap-8">
@@ -82,7 +80,7 @@
 
         
        
-<form action="{{ route('comment_store',['slug'=>$course->slug,'position'=>$currentLesson->id ?? null]) }}" method="POST">
+<form action="{{ route('comment_store',[$course,'lesson'=>$currentLesson->id ?? null]) }}" method="POST">
     @csrf
 
     <input type="hidden" name="lesson_id" value="{{ $currentLesson->id ?? null}}">
@@ -90,7 +88,7 @@
 
     <div class="max-w-2xl mx-auto mb-6 mt-6">
         <div class="flex space-x-4">
-            <img src="{{ auth()->user()->profile_photo_url ?? 'https://via.placeholder.com/50' }}" class="w-12 h-12 rounded-full" alt="User">
+            <img src="https://via.placeholder.com/50" class="w-12 h-12 rounded-full" alt="User">
     
             <div class="flex-1">
                 <textarea name="body" placeholder="WRITE A REPLY."
@@ -119,37 +117,68 @@
             <div class="flex-2">
                 <p class="font-bold">{{ $comment->user->name }}</p>
                 <p class="text-gray-300 text-sm mt-1">{{ $comment->body }}</p>
-            </div>
-{{-- 
-            @if (auth()->id() === $comment->user_id)
+
+            {{-- @if (auth()->id() === $comment->user_id)
             <form action="{{ route('comment_destroy', ['slug' => $course->slug, 'position' => $comment->id]) }}" method="POST">  @csrf
                     @method('DELETE')
                     <button type="submit" class="text-red-400 hover:text-red-600 text-xs">Delete</button>
                 </form>
-            @endif --}}
+            @endif  --}}
+       
         </div>
     </div>
 </div>
                     @endforeach
 
     </main>
+
+    
+    @else
+    <main class="flex-1 flex flex-col items-center justify-center px-8 text-center">
+        <div class="bg-[#1E293B] p-10 shadow-lg max-w-lg w-full">
+          <div class="mb-6">
+            <div class="w-16 h-16 mx-auto bg-gray-800 rounded-lg flex items-center justify-center">
+                <img src="{{ asset('storage/random_course/three.webp') }}" alt="Icon" class="w-25 h-25">
+              </div>
+          </div>
+          <h2 class="text-2xl font-bold mb-2">{{ $currentLesson->title }} </h2>
+          <p class="text-gray-400 mb-6">is for subscribers only.</p>
+          <p class="text-sm text-gray-300 mb-6">
+            For the cost of a pizza, you'll gain access to this and hundreds of hours worth of content from top developers in the Laravel space!
+          </p>
+          <div class="flex justify-center space-x-4">
+            <a href="/subscribe" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2">Subscribe!</a>
+          </div>
+        </div>
+    
+       
+      </main>
+
+
+
+
+
+
+
+      @endif
     @endauth
 
 
 
 
-@guest
-
+   @guest
+       
+  
         <main class="flex-1 flex flex-col items-center justify-center px-8 text-center">
           <div class="bg-[#1E293B] p-10 shadow-lg max-w-lg w-full">
             <div class="mb-6">
               <div class="w-16 h-16 mx-auto bg-gray-800 rounded-lg flex items-center justify-center">
-                <svg class="w-8 h-8 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10 2L2 20h16L10 2z" />
-                </svg>
+                <div class="w-16 h-16 mx-auto bg-gray-800 rounded-lg flex items-center justify-center">
+                    <img src="{{ asset('storage/random_course/two.webp') }}" alt="Icon" class="w-25 h-25">
+                  </div>
               </div>
             </div>
-            <h2 class="text-2xl font-bold mb-2">"BREAKING DOWN COMPONENTS"</h2>
+            <h2 class="text-2xl font-bold mb-2">{{ $currentLesson->title }}</h2>
             <p class="text-gray-400 mb-6">is for subscribers only.</p>
             <p class="text-sm text-gray-300 mb-6">
               For the cost of a pizza, you'll gain access to this and hundreds of hours worth of content from top developers in the Laravel space!
@@ -163,9 +192,17 @@
             Learn by doing. <a href="/register" class="text-blue-400 underline"> Start now</a>.
           </p>
         </main>
-     
+
         @endguest
 
+
+
+
+        @else
+        <div class="text-center text-gray-400 text-lg mt-20">
+            <p>Select a lesson to begin watching.</p>
+        </div>
+    @endif
 
 
 

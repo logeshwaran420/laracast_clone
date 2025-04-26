@@ -49,7 +49,6 @@
     </div>
 </div>
 
-<!-- Categories List -->
 <div class="mb-6">
     <h3 class="text-white text-sm font-semibold mb-2">CATEGORIES</h3>
     <div class="flex flex-wrap gap-2">
@@ -97,7 +96,9 @@
                 @foreach ($courses as $course)
                     <x-scroll.section 
                         :href="route('admin.courses.index', $course->slug)" 
-                        :title="$course->title">
+                        :title="$course->title"
+                         img="{{ asset('storage/random_course/five.png') }}"
+                        >
                     </x-scroll.section>
                 @endforeach
             </div>

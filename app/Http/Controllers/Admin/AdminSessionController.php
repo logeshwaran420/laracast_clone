@@ -15,43 +15,49 @@ class AdminSessionController extends Controller
     }
 
 
+  public function store(Request $request)
+{
+   
+    $attributes = $request->validate([
+        'email' => ['required', 'email'],
+        'password' => ['required'],
+    ]);
 
     
-    public function store(Request $request)
-    {
-        // Validate login credentials
-        $attributes = $request->validate([
-            "email" => ["required", "email"],
-            "password" => ["required"]
-        ]);
-    
-        if (Auth::attempt($attributes)) {
-            $user = Auth::user();
-    
-       
-            if ($user->role === 'admin') {
-                $request->session()->regenerate();
-                return redirect()->intended('/admin');
-            }
-    
-            Auth::logout();
-            return back()->withErrors([
-                'email' => 'Access denied. Only admins can log in here.',
-            ]);
+    if (Auth::guard('admin')->attempt($attributes)) {
+        $user = Auth::guard('admin')->user();
+
+        if ($user->role === 'admin') {
+
+            $request->session()->regenerate();
+
+            return redirect()->intended('/admin');
         }
-    
+
+        Auth::guard('admin')->logout();
+
         return back()->withErrors([
-            'email' => 'We couldn\'t verify your credentials.',
+            'email' => 'Access denied. Only admins can log in here.',
         ]);
     }
 
+   return back()->withErrors([
+        'email' => 'We couldn\'t verify your credentials.',
+    ]);
+}
 
 
-    public function destroy()
+
+    public function destroy(Request $request)
     {
-        Auth::logout();
-        return redirect('admin'); 
-    }
+        Auth::guard('admin')->logout(); 
 
+        // $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+    
+        return redirect('/admin/login');
+    }
+    
     
 }

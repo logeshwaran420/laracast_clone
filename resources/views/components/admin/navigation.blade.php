@@ -19,25 +19,24 @@
             <img src="{{ Vite::asset('resources/images/logo.png') }}" alt="Logo" class="h-8">
         </div>
 
-        <!-- Right Side (Search, Profile, Logout) -->
-        @auth
+         @auth
         <div class="flex space-x-6">
-            <!-- Search Icon Button (Gray) -->
+           
             <a href="{{ route('admin.search') }}" class="text-gray-300 hover:text-white transition">
                 <i class="fas fa-search" style="font-size: 1.5rem;"></i>
             </a>
 
-            <!-- Profile Image -->
             <img src="{{ Vite::asset('resources/images/profile.png') }}" alt="Profile" class="h-8">
 
-            <!-- Log Out Button (Gray) -->
-            <form action="{{ route('admin.logout') }}" method="POST">
+           <form action="{{ route('admin.logout') }}" method="POST">
                 @csrf
                 @method("DELETE")
                 <button type="submit" class="px-6 py-2 text-white bg-blue-600 font-semibold shadow-md hover:bg-blue-700 transition">
                     Log Out
                 </button>
             </form>
+
+            
         </div>
         @endauth
 

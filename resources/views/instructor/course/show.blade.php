@@ -63,7 +63,7 @@ class="w-[300px] h-[400px] object-cover shadow-lg mx-auto"
         
             </div>
 
-            <a href="{{ route('instructor.lessons.create', ['slug' => $course->slug]) }}" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600">
+            <a href="{{ route('instructor.lessons.create',  $course) }}" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600">
              Add Episodes</a>
         </div>
 

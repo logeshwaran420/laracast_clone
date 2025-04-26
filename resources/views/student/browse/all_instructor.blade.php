@@ -16,7 +16,7 @@
     
 
 
-<a href="{{ route('instructor',['id' => $instructor->user->id]) }}">
+<a href="{{ route('instructor',['instructor' => $instructor->id]) }}">
 <div class="w-80 h-80 relative shadow-md overflow-hidden">
   <img src="{{ asset('storage/instructors/' . $instructor->image) }}" 
   alt="{{ $instructor->user->name }}" 

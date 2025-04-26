@@ -6,10 +6,7 @@
     <div class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 px-6 py-12 text-white">
         <div class="max-w-4xl mx-auto flex flex-col lg:flex-row items-start gap-12">
           
-          <!-- Instructor Sidebar -->
-          <div class="flex-shrink-0 text-center w-full lg:w-1/4">
-            <img src="https://placehold.co/300x400" class="w-64 h-auto rounded-lg shadow-lg mx-auto" alt="Instructor" />
-          </div>
+          
       
           <!-- Main Course Content -->
           <div class="flex-1 max-w-2xl">
@@ -27,10 +24,10 @@
             <!-- Action Buttons -->
             <div class="flex flex-wrap gap-4 mb-6">
                 <!-- Edit Button -->
-                <a href="{{ route('admin.topics.edit',['catId' => $category->id ]) }}" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 text-sm font-semibold rounded">
+                <a href="{{ route('admin.topics.edit',[$category]) }}" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 text-sm font-semibold rounded">
                   Edit Category
                 </a>
-                <a href="{{ route('admin.topics.add', ['catId' => $category->id]) }}"
+                <a href="{{ route('admin.topics.add', [$category]) }}"
                   class="bg-gray-700 hover:bg-gray-500 text-white px-6 py-3 text-sm font-semibold rounded">
                   Add Courses
                </a>

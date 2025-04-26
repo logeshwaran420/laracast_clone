@@ -95,7 +95,9 @@
                     @foreach ($activeCourses as $course)
                         <x-scroll.section 
                             :href="route('series', $course->slug)" 
-                            :title="$course->title">
+                            :title="$course->title"
+                            img="{{ asset('storage/random_course/three.webp') }}"
+                            >{{ $course->instructor->name }}
                         </x-scroll.section>
                     @endforeach
                 </div>

@@ -16,13 +16,11 @@ class Course extends Model
         return $this->hasMany(Lesson::class);
     }
 
-    // A course can belong to many categories
-    public function categories()
+   public function categories()
     {
         return $this->belongsToMany(Category::class, 'course_category');
     }
-
-    // A course can have many tags
+    
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'course_tag');
@@ -46,6 +44,10 @@ class Course extends Model
     return $this->hasMany(Message::class);
 }
 
+public function getRouteKeyName()
+{
+    return 'slug'; 
+}
 
 
 }

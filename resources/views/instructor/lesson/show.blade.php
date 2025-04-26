@@ -20,7 +20,7 @@
 
         {{-- Action Buttons --}}
         <div class="flex items-center justify-between mt-10">
-            <a href="{{ route('instructor.lessons.edit', ['slug' => $course->slug, 'id' => $lesson->id]) }}" 
+            <a href="{{ route('instructor.lessons.edit', [$course, $lesson->id]) }}" 
             
             
             class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 text-sm font-semibold rounded">

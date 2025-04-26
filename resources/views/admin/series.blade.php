@@ -27,7 +27,7 @@
 <x-scroll.scrollbar>
     @foreach ($courses as $course)
     <x-scroll.section :title="$course->title"
-         :href="route('admin.courses.index',['slug' => $course->slug])"
+         :href="route('admin.courses.index', $course)"
          img="{{ asset('storage/random_course/three.webp') }}" 
           />
 

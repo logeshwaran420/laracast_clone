@@ -8,33 +8,29 @@ use Illuminate\Support\Facades\Auth;
 
 class InstructorSessionController extends Controller
 {
-    //
     public function create(){
 
         return view('auth.instructor.login');
     }
-
-
-
-    
+ 
     public function store(Request $request)
     {
-        // Validate login credentials
         $attributes = $request->validate([
-            "email" => ["required", "email"],
-            "password" => ["required"]
+            'email' => ['required', 'email'],
+            'password' => ['required'],
         ]);
     
-        if (Auth::attempt($attributes)) {
-            $user = Auth::user();
+        if (Auth::guard('instructor')->attempt($attributes)) {
+            $user = Auth::guard('instructor')->user();
     
-       
             if ($user->role === 'instructor') {
-                $request->session()->regenerate();
+                 $request->session()->regenerate();
+    
                 return redirect()->intended('/instructor');
             }
     
-            Auth::logout();
+             Auth::guard('instructor')->logout();
+    
             return back()->withErrors([
                 'email' => 'Access denied. Only instructors can log in here.',
             ]);
@@ -44,14 +40,22 @@ class InstructorSessionController extends Controller
             'email' => 'We couldn\'t verify your credentials.',
         ]);
     }
+    
 
 
-
-    public function destroy()
+    public function destroy(Request $request)
     {
-        Auth::logout();
+       
+        Auth::guard('instructor')->logout(); 
+        
+        
+        // $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+
         return redirect('instructor'); 
     }
 
 
 }
+

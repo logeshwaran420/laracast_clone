@@ -3,7 +3,7 @@
 @section('content')
 <x-admin.navigation/>
 <div class="flex items-center justify-center bg-gray-900 px-8 py-12">
-    <form action="{{ route('admin.courses.msgStore', ['slug' => $course->slug]) }}" method="POST" enctype="multipart/form-data" class="w-full max-w-4xl bg-gray-800 p-8 rounded-lg shadow-lg">
+    <form action="{{ route('admin.courses.msgStore', $course) }}" method="POST" enctype="multipart/form-data" class="w-full max-w-4xl bg-gray-800 p-8 rounded-lg shadow-lg">
         @csrf
     
         {{-- Sender ID (hidden) --}}

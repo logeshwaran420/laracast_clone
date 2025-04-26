@@ -8,7 +8,7 @@
 </x-heading.main-head>
 
 <div class="flex items-center justify-center bg-gray-900 px-8 py-12">
-    <form action="{{ route('instructor.lessons.store', ['slug' => $course->slug]) }}" method="POST" enctype="multipart/form-data" class="w-full max-w-4xl">
+    <form action="{{ route('instructor.lessons.store', $course) }}" method="POST" enctype="multipart/form-data" class="w-full max-w-4xl">
         @csrf
     
     

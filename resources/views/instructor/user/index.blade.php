@@ -18,7 +18,7 @@
         </p>
 
         <div class="mt-8 flex gap-4">
-            <a href="{{ route('instructor.users.edit',['id'=>auth()->user()->id]) }}"
+            <a href="{{ route('instructor.users.edit',$instructor) }}"
                 class="bg-blue-600 hover:bg-blue-500 px-6 py-3 text-lg font-semibold inline-block text-white ">
                  Edit Info
              </a>

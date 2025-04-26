@@ -8,7 +8,7 @@
 </x-heading.main-head>
 
 <div class="flex items-center justify-center bg-gray-900 px-8 py-12">
-    <form action="{{ route('instructor.users.update',['id' => $instructor->id]) }}" 
+    <form action="{{ route('instructor.users.update',$instructor) }}" 
         method="POST" enctype="multipart/form-data" class="w-full max-w-4xl">
         @csrf
         <!-- Assuming you are using PUT for updating data -->

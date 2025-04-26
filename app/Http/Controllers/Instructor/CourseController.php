@@ -11,7 +11,7 @@ use Str;
 
 class CourseController extends Controller
 {
-    protected $commonDataService;
+    protected $commonDataService;                  
 
     public function __construct(CommonDataService $commonDataService)
     {
@@ -20,25 +20,15 @@ class CourseController extends Controller
     public function index($slug = null)
     {
      
-    
+                    
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('instructor.course.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
       
@@ -57,86 +47,113 @@ class CourseController extends Controller
             'status' => false, // default value
         ]);
 
-        return redirect()->route('instructor.courses.show', ['slug' => $course->slug]);
+        return redirect()->route('instructor.courses.show', ['course' => $course->slug]);
 
-    
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($slug = null)
+    // public function show()
+    // {
+    //     $data = $this->commonDataService->getCommonData();
+    
+    //     $course = Course::with(['lessons' => function ($query) {
+    //         $query->orderBy('position');
+    //     },])->where('slug', $slug)->firstOrFail();
+
+    //     $this->authorize('view', $course);
+
+    //     $instructors = $course->instructor;
+    //    $instructor = $instructors->instructor;
+        
+    //     return view('instructor.course.show', compact('course','instructor','instructors'));
+    // }
+    
+    public function show(Course $course)
     {
         $data = $this->commonDataService->getCommonData();
-    
-        $course = Course::with(['lessons' => function ($query) {
-            $query->orderBy('position');
-        },])->where('slug', $slug)->firstOrFail();
+
+        $this->authorize('view', $course);
 
         $instructors = $course->instructor;
-       $instructor = $instructors->instructor;
-        
-        return view('instructor.course.show', compact('course','instructor','instructors'));
+        $instructor = $instructors->instructor;
+
+        return view('instructor.course.show', compact('course', 'instructor', 'instructors'));
     }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($slug)
+    
+    // public function edit(course $course)
+    // {
+    //     $data = $this->commonDataService->getCommonData();
+
+    //     //$course = Course::where('slug', $slug)->firstOrFail();
+
+    //     $this->authorize('update', $course);
+
+    //     return view('instructor.course.edit', compact('course'));
+    // }
+    public function edit(Course $course)
     {
         $data = $this->commonDataService->getCommonData();
 
-        $course = Course::where('slug', $slug)->firstOrFail();
+        $this->authorize('update', $course);
+
         return view('instructor.course.edit', compact('course'));
     }
-
     
-    public function update(Request $request, $slug)
-    {
+    // public function update(Request $request, $slug)
+    // {
 
+    //     $request->validate([
+    //         'title' => 'required|string|max:255',
+    //         'description' => 'required|string',
+    //     ]);
+    
+    //     $course = Course::where('slug', $slug)->firstOrFail();
+    
+      
+    //     $course->update([
+    //         'title' => $request->title,
+    //         'slug' => Str::slug($request->title), 
+    //          'description' => $request->description,
+    //     ]);
+    
+    //     return redirect()->route('instructor.courses.show', ['slug' => $course->slug]);
+    // }
+
+    public function update(Request $request, Course $course)
+    {
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
         ]);
-    
-        // Find the course by slug
-        $course = Course::where('slug', $slug)->firstOrFail();
-    
-        // Update the course data
+
         $course->update([
             'title' => $request->title,
-            'slug' => Str::slug($request->title), // Ensure the slug is updated
+            'slug' => Str::slug($request->title),
             'description' => $request->description,
         ]);
-    
-        // Redirect to the course index or another page
-        return redirect()->route('instructor.courses.show', ['slug' => $course->slug]);
+
+        return redirect()->route('instructor.courses.show', $course->slug);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($slug)
+    public function destroy(Course $course)
     {
-         // Find the course by its slug
-    $course = Course::where('slug', $slug)->firstOrFail();
+        $this->authorize('delete', $course);
 
-    // Delete the course
-    $course->delete();
+        $course->delete();
 
-    // Redirect to a specific route (e.g., the index or library)
-    return redirect()->route('instructor.library');
+        return redirect()->route('instructor.library');
     }
 
+//     public function destroy(course $course)
+//     {
+    
+//     $course = Course::where('slug', $slug)->firstOrFail();
 
+//     $this->authorize('delete', $course);
+
+//    $course->delete();
+
+//      return redirect()->route('instructor.library');
+//     }
 
 
 }

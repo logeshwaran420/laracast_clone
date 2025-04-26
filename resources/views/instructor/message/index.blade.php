@@ -53,7 +53,7 @@
     <div class="bg-gray-800 p-4 rounded shadow flex items-start space-x-4">
         <img src="https://i.pravatar.cc/100?u=2" class="w-10 h-10 rounded-full" alt="avatar">
         <div class="flex-1">
-            <a href="{{ route('instructor.messages.show',['id' => $message->id]) }}">
+            <a href="{{ route('instructor.messages.show',$message) }}">
                 <h2 class="text-lg font-semibold hover:underline cursor-pointer">
                     {{ $message->subject }}
                 </h2>

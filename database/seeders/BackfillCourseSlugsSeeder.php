@@ -23,6 +23,5 @@ class BackfillCourseSlugsSeeder extends Seeder
             $course->save();
         });
 
-        echo "✅ Slugs backfilled successfully.\n";
     }
 }

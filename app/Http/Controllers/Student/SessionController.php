@@ -16,7 +16,7 @@ class SessionController extends Controller
 
     public function store(Request $request)
     {
-        // Validate login credentials
+       
         $attributes = $request->validate([
             "email" => ["required", "email"],
             "password" => ["required"]
@@ -25,20 +25,18 @@ class SessionController extends Controller
         if (Auth::attempt($attributes)) {
             $user = Auth::user();
     
-            // Allow only students
+       
             if ($user->role === 'student') {
                 $request->session()->regenerate();
                 return redirect()->intended('/browse');
             }
-    
-            // If role is not student, logout and show error
-            Auth::logout();
+     Auth::logout();
             return back()->withErrors([
                 'email' => 'Access denied. Only students can log in here.',
             ]);
         }
     
-        // Login failed
+       
         return back()->withErrors([
             'email' => 'We couldn\'t verify your credentials.',
         ]);

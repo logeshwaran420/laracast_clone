@@ -1,4 +1,3 @@
-
 <div class="container mx-auto px-10 py-4">
     <footer class="bg-gray-800 text-gray-400 py-12">
         <div class="max-w-7xl mx-auto px-6 sm:px-8">
@@ -35,10 +34,15 @@
                 </div>
     
                 <!-- Optional: Newsletter or Socials -->
-                <div>
+                <div class="flex flex-col items-center">
                     <p class="text-lg font-semibold text-white">Stay Updated</p>
-                    <p class="text-sm mt-2">Subscribe to our newsletter or follow us on social media.</p>
+                    <p class="text-sm mt-2 text-center">Subscribe to our newsletter or follow us on social media.</p>
                     <!-- You can add a subscribe form or icons here -->
+                    <form action="{{ route('newsletter') }}" method="POST" class="mt-4 flex justify-center w-full max-w-sm">
+                        @csrf  <!-- CSRF token for protection -->
+                        <input type="email" name="email" placeholder="Your Email Address" class="p-2 border border-gray-300 focus:outline-none w-full text-sm placeholder-gray-400" required />
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-2 py-2">Subscribe</button>
+                    </form>
                 </div>
             </div>
     
@@ -48,6 +52,4 @@
             </div>
         </div>
     </footer>
-    
-    
- </div>
+</div>

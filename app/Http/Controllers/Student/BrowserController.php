@@ -19,83 +19,77 @@ class BrowserController extends Controller
     {
         $this->commonDataService = $commonDataService;
     }
-    public function index($tagName = null)
+//     public function index($tagName = null)
+//     {
+//         $data = $this->commonDataService->getCommonData();
+//  if ($tagName) {
+//         $tag = Tag::where('name',$tagName)->firstOrFail();
+//             $categories =$tag->categories()->get();  
+//         }
+//         else {
+//             $categories = category::all(); 
+//         }
+//         $courses = collect(); 
+
+//   return view('student.browse.index',array_merge($data, compact('categories','courses')));
+
+//     }
+
+    public function index(Tag $tag)
     {
         $data = $this->commonDataService->getCommonData();
-
-        
-
-        if ($tagName) {
-
-
-            $tag = Tag::where('name',$tagName)->firstOrFail();
-            $categories =$tag->categories()->get(); 
-
-
-            // $data['categories'] = Category::with(['courses' => function ($query) use ($tagName) {
-            //     $query->whereHas('tags', function ($q) use ($tagName) {
-            //         $q->where('name', $tagName);
-            //     });
-            // }])->get();
+ if ($tag) {
+       
+            $categories =$tag->categories()->get();  
         }
         else {
             $categories = category::all(); 
         }
-    
-        $courses = collect(); 
 
-  return view('student.browse.index',array_merge($data, compact('categories','courses')));
- // return redirect()->to(route('topics', ['categoryName' => $category->name]) . '#courses');
+       
+  return view('student.browse.index',array_merge($data, compact('categories',)));
+
     }
-  
-    
 
 
-    
-    public function show($categoryName = null)
-    
-    {
-        
+    public function show(Category $category)   
+    {       
         $data = $this->commonDataService->getCommonData();
         
         $courses = collect(); 
         
-        if ($categoryName) {
-            $category = Category::where('name', $categoryName)->firstOrFail();
+        if ($category) {
            $courses = $category->courses()->get();
 
-
-
-        
         } 
-
-     
       return view('student.browse.index', array_merge($data, compact('courses')));
-    //  return redirect()->to(route('topics', ['categoryName' => $category->name]) . '#courses'); 
     
     }
+    
+
+    // public function show($categoryName = null)   
+    // {       
+    //     $data = $this->commonDataService->getCommonData();
+        
+    //     $courses = collect(); 
+        
+    //     if ($categoryName) {
+    //         $category = Category::where('name', $categoryName)->firstOrFail();
+    //        $courses = $category->courses()->get();
+
+    //     } 
+    //   return view('student.browse.index', array_merge($data, compact('courses')));
+    
+    // }
 
 
 
-
-
-
-
-
-
-
-
-    public function show2($id)
+public function show2(Instructor $instructor)
 {
-    $instructor = Instructor::with(['user.courses'])->where('user_id', $id)->firstOrFail();
-$courses = $instructor->user->courses;
-
-    return view('student.browse.instructor', compact('instructor','courses'));
-}  
-
-
-
-
+  
+    $courses = $instructor->user->courses;
+    return view('student.browse.instructor', compact('instructor', 'courses'));
+}
 
 
 public function show3(){

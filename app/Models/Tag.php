@@ -19,4 +19,8 @@ class Tag extends Model
      
         return $this->belongsToMany(Category::class, 'tag_category');   
     }
+    public function getRouteKeyName()
+    {
+        return 'name';  // Use the 'name' column for route model binding
+    }
 }

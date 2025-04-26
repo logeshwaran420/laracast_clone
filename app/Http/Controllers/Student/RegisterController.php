@@ -10,10 +10,10 @@ use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
 {
-    // Display registration form
     public function create(){
         return view("auth.register");
     }
+ 
     public function store(Request $request)
     {
         $validatedData = $request->validate([

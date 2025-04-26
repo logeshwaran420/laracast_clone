@@ -85,5 +85,11 @@ public function comments()
 {
     return $this->hasMany(Comment::class);
 }
+
+   public function subscriptions()
+    {
+        return $this->hasone(Subscription::class);
+    }
+
     
 }

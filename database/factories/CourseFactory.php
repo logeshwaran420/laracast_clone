@@ -22,11 +22,11 @@ class CourseFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->sentence(3),  // Generates a random 3-word title
-            'description' => $this->faker->paragraph(), // Random paragraph for description
+            'title' => $this->faker->sentence(3), 
+            'description' => $this->faker->paragraph(), 
             'user_id' => User::inRandomOrder()->first()->id ?? User::factory(),
-            'shorts' => $this->faker->numberBetween(1, 10), // You can change this to any logic
-        'status' => $this->faker->boolean(80), // 80% chance it's true
+            'shorts' => $this->faker->numberBetween(1, 10),
+        'status' => $this->faker->boolean(80),
         ];
     }
 

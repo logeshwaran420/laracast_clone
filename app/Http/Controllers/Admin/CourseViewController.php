@@ -7,6 +7,8 @@ use App\Models\Course;
 use App\Models\Message;
 use App\Services\CommonDataService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+
 
 class CourseViewController extends Controller
 {
@@ -16,9 +18,9 @@ class CourseViewController extends Controller
     {
         $this->commonDataService = $commonDataService;
     }
-    public function index($slug){
+    public function index(course $course){
 
-        $course = Course::with("lessons")->where('slug', $slug)->firstOrFail();
+       // $course = Course::with("lessons")->where('slug', $slug)->firstOrFail();
         $lessons = $course->lessons;
 
        
@@ -27,9 +29,9 @@ class CourseViewController extends Controller
     }
 
 
-    public function toggleStatus($slug)
+    public function toggleStatus(course $course)
     {
-        $course = Course::where('slug', $slug)->firstOrFail();
+        //$course = Course::where('slug', $slug)->firstOrFail();
     
         $course->status = $course->status ? 0 : 1;
         $course->save();
@@ -39,17 +41,17 @@ class CourseViewController extends Controller
         return back();
     }
 
-    public function message($slug){
+    public function message(course $course){
 
-        $course = Course::where('slug', $slug) // Eager load the user (instructor) relationship
-        ->firstOrFail();
+       // $course = Course::where('slug', $slug) // Eager load the user (instructor) relationship
+        //->firstOrFail();
 
         return view("admin.course.message",compact("course"));
 
     }
 
-    public function msgStore(request $request,$slug){
-   
+    public function msgStore(Request $request,course $course)
+    {
         $request->validate([
             'subject' => 'required|string|max:255',
             'body' => 'required|string', 
@@ -58,25 +60,29 @@ class CourseViewController extends Controller
             'course_id' => 'required|exists:courses,id',
         ]);
     
-        $course = Course::where('slug', $slug)->firstOrFail();
+      //  $course = Course::where('slug', $slug)->firstOrFail();
+    
+        if ($course->id != $request->course_id) {
+            abort(400, 'Course mismatch.');
+        }
+    
+        $message = Message::create([
+            'subject' => $request->subject,
+            'body' => $request->body,
+            'sender_id' => $request->sender_id,
+            'receiver_id' => $request->receiver_id,
+            'course_id' => $request->course_id,
+        ]);
 
-      if ($course->id != $request->course_id) {
-        abort(400, 'Course mismatch.');
+
+        Mail::to($message->course->user)->send(
+new \App\Mail\Message($message)
+
+        );
+    
+        return redirect()->route('admin.courses.index', $course);
     }
     
-       
-        $message = new Message();
-        $message->subject = $request->subject;  
-        $message->body = $request->body;        
-        $message->sender_id = $request->sender_id;
-        $message->receiver_id = $request->receiver_id; 
-        $message->course_id = $request->course_id;
-        $message->save(); 
-
-
-        return redirect()->route('admin.courses.index', ['slug' => $slug]);
-    
-    }
 
 
 
