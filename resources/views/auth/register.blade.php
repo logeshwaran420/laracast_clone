@@ -72,7 +72,7 @@
             
             <div class="mt-6 text-center">
                 <p class="text-gray-400 text-sm font-bold hover:underline">
-                    <a href="#">Already have an account?</a> <!-- Added link to login page -->
+                    <a href="/login">Already have an account?</a> <!-- Added link to login page -->
                 </p>
             </div>
         </form>

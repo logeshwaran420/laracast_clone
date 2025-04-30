@@ -10,11 +10,14 @@
 </x-nav-link>
                 <x-nav-link href="/series" :active="request()->is('series/*','series')">Series</x-nav-link>
                 <x-nav-link href="/path" :active="request()->is('path')">Path</x-nav-link>
+                <x-nav-link href="/discuss" :active="request()->is('discuss','discuss/*')">Forum</x-nav-link>
             </ul>
         </div>
 
         <div class="absolute left-1/2 transform -translate-x-1/2">
+            <a href="/">
             <img src="{{ Vite::asset('resources/images/logo.png') }}" alt="Logo" class="h-8">
+        </a>
         </div>
 @auth
 
@@ -25,6 +28,7 @@
     </a>
 
     <!-- Profile Image -->
+   
     <img src="{{ Vite::asset('resources/images/profile.png') }}" alt="Profile" class="h-8">
 
     <!-- Log Out Button (Gray) -->

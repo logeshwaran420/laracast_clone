@@ -13,20 +13,23 @@
     :category="$randomCategory->name" 
     :time="$randomCourse->title" 
     :lesson="$randomCourse->lessons->count()">
-    {{ $instructor->name }}
+   <a href="{{ route('instructor',['instructor' => $instruct->id]) }}" class="hover:underline"> {{ $instructor->name }}</a>
 </x-course.meta>
 
-
+@php
+  $firstLesson = $randomCourse->lessons->first();
+@endphp
 
     <x-course.detail
+
         :title="$randomCourse->title" 
         :description="$randomCourse->description"
-        :playUrl="route('episode', [
+        :playUrl="$firstLesson ? route('episode', [
           'course' => $randomCourse->slug,
-          'lesson' => $randomCourse->lessons->first()->id
-      ])"
+          'lesson' => $firstLesson->id
+      ]) : '#'"
       
-    >
+      >
         <img src="{{ asset('storage/instructors/' .$instruct->image) }}" alt="Instructor" class="w-56 h-76 shadow-lg">
     </x-course.detail>
 
@@ -67,7 +70,7 @@
     
 
 
-<a href="{{ route('instructor',['instructor' => $instructor->user->id]) }}">
+<a href="{{ route('instructor',['instructor' => $instructor->id]) }}">
 <div class="w-80 h-80 relative shadow-md overflow-hidden">
   <img src="{{ asset('storage/instructors/' . $instructor->image) }}" 
   alt="{{ $instructor->user->name }}" 
@@ -99,8 +102,7 @@
 
 <x-heading.sub-head >
 Pick a Topic. Any Topic. </x-heading.sub-head>
-
-     <x-scroll.scrollbar>
+<x-scroll.scrollbar>
 
 
 <div class="container mx-auto px-10 py-4">
@@ -108,7 +110,7 @@ Pick a Topic. Any Topic. </x-heading.sub-head>
         @foreach ($categories as $category)
             @if ($category->courses->count() > 0)
                 <x-card 
-               :href="route('topics', ['categoryName' => $category->name]).'#courses'"
+               :href="route('topics',  $category->name).'#courses'"
                     :name="$category->name" 
                     :course-count="$category->courses->count()" 
                     :video-count="$category->courses->sum(fn($course) => $course->lessons->count())"

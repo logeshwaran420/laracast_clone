@@ -16,23 +16,27 @@
         whether it be a particular framework, language, or tool.
     </x-heading.main-head> 
 
-    {{-- Tag Subnav --}}
     <nav class="mt-6 px-10 py-4">
         <ul class="flex space-x-4 text-lg font-semibold text-gray-400 uppercase">
-          
-<x-student.subnav-link href="{{ route('browse') }}" :active="!request('tag?')">
-    ALL TOPICS
-</x-student.subnav-link>
+            
+           <x-student.subnav-link
+                href="{{ url('/browse') }}"
+                :active="!request()->route('tag')"
+            >
+                ALL TOPICS
+            </x-student.subnav-link>
+    
             @foreach ($tags as $tag)
                 <x-student.subnav-link
-                    href="{{ route('browse', ['tag' => $tag->name]) }}" 
-                    :active="request()->route('tag') === $tag->name"
+                    href="{{ route('browse', ['tag' => $tag->name]) }}"
+                    :active="request()->route('tag') && request()->route('tag')->is($tag)"
                 >
                     {{ $tag->name }}
                 </x-student.subnav-link>
             @endforeach
         </ul>
     </nav>
+    
 
     {{-- Category Grid --}}
     

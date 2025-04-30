@@ -1,3 +1,5 @@
+
+
 @extends('layout.admin')
 @section('content')
 <x-admin.navigation />
@@ -27,63 +29,23 @@
      class="w-[300px] h-[300px] object-contain shadow-lg rounded-lg" >
 </div>
 
-
-
 </div>
 
+<x-heading.sub-head>
+    courses</x-heading.sub-head>
+<x-scroll.scrollbar>
 
+ @foreach ($courses as $course)
 
-
-
-
-
-
-
-
-
-
-
-<div class="flex h-screen ">
-
-
-
-<div class="space-y-4 mb-8">
-         
-    @foreach ($messages as $message)
-
-    <div class="bg-gray-800 p-4 rounded shadow flex items-start space-x-4 
-    ">
-        <img src="https://i.pravatar.cc/100?u=2" class="w-10 h-10 rounded-full" alt="avatar">
-        <div class="flex-1">
-            <a href="{{ route('admin.courses.index',['slug' => $message->course->slug]) }}"><h2 class="text-lg font-semibold hover:underline cursor-pointer">
-                {{ $message->subject }}
-            </h2></a>
-            <div class="text-sm text-gray-400 mb-2">
-                <strong>From:</strong> {{ $message->sender->name }}
-                <span class="text-xs px-2 py-0.5 bg-blue-600 rounded ml-2">Sent</span>
-            </div>
-        </div>
-        <div class="text-right space-y-1">
-            @if ($message->is_read == 1)
-                <!-- Message is read (status = 1) -->
-                <div class="text-xs px-2 py-1 bg-green-600 rounded">Fixed   </div>
-            @else
-                <!-- Message is unread (status = 0) -->
-                <div class="text-xs px-2 py-1 bg-red-600 rounded">Need-To-Fix</div>
-               
-            @endif
-        </div>
-    </div>
-            
-    @endforeach 
-    
-
-
-</div>
-</div>
+     <x-scroll.section  :title="$course->title"
+          :href="route('admin.courses.index', $course)"
+          img="{{ asset('storage/random_course/three.webp') }}" 
+           />
+ 
+     @endforeach
+    </x-scroll.scrollbar>
 
 
 
 
 @endsection
-

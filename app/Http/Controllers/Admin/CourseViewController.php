@@ -9,7 +9,6 @@ use App\Services\CommonDataService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
-
 class CourseViewController extends Controller
 {
     protected $commonDataService;
@@ -20,10 +19,7 @@ class CourseViewController extends Controller
     }
     public function index(course $course){
 
-       // $course = Course::with("lessons")->where('slug', $slug)->firstOrFail();
         $lessons = $course->lessons;
-
-       
 
         return view("admin.course.index",compact("course","lessons"));
     }
@@ -31,8 +27,7 @@ class CourseViewController extends Controller
 
     public function toggleStatus(course $course)
     {
-        //$course = Course::where('slug', $slug)->firstOrFail();
-    
+       
         $course->status = $course->status ? 0 : 1;
         $course->save();
         
@@ -43,8 +38,7 @@ class CourseViewController extends Controller
 
     public function message(course $course){
 
-       // $course = Course::where('slug', $slug) // Eager load the user (instructor) relationship
-        //->firstOrFail();
+       
 
         return view("admin.course.message",compact("course"));
 
@@ -60,8 +54,7 @@ class CourseViewController extends Controller
             'course_id' => 'required|exists:courses,id',
         ]);
     
-      //  $course = Course::where('slug', $slug)->firstOrFail();
-    
+      
         if ($course->id != $request->course_id) {
             abort(400, 'Course mismatch.');
         }
@@ -82,28 +75,6 @@ new \App\Mail\Message($message)
     
         return redirect()->route('admin.courses.index', $course);
     }
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public function sort()
     {
          $data = $this->commonDataService->getCommonData();

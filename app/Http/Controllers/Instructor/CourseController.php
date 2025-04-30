@@ -51,21 +51,6 @@ class CourseController extends Controller
 
     }
 
-    // public function show()
-    // {
-    //     $data = $this->commonDataService->getCommonData();
-    
-    //     $course = Course::with(['lessons' => function ($query) {
-    //         $query->orderBy('position');
-    //     },])->where('slug', $slug)->firstOrFail();
-
-    //     $this->authorize('view', $course);
-
-    //     $instructors = $course->instructor;
-    //    $instructor = $instructors->instructor;
-        
-    //     return view('instructor.course.show', compact('course','instructor','instructors'));
-    // }
     
     public function show(Course $course)
     {
@@ -79,16 +64,7 @@ class CourseController extends Controller
         return view('instructor.course.show', compact('course', 'instructor', 'instructors'));
     }
     
-    // public function edit(course $course)
-    // {
-    //     $data = $this->commonDataService->getCommonData();
-
-    //     //$course = Course::where('slug', $slug)->firstOrFail();
-
-    //     $this->authorize('update', $course);
-
-    //     return view('instructor.course.edit', compact('course'));
-    // }
+      
     public function edit(Course $course)
     {
         $data = $this->commonDataService->getCommonData();
@@ -98,25 +74,6 @@ class CourseController extends Controller
         return view('instructor.course.edit', compact('course'));
     }
     
-    // public function update(Request $request, $slug)
-    // {
-
-    //     $request->validate([
-    //         'title' => 'required|string|max:255',
-    //         'description' => 'required|string',
-    //     ]);
-    
-    //     $course = Course::where('slug', $slug)->firstOrFail();
-    
-      
-    //     $course->update([
-    //         'title' => $request->title,
-    //         'slug' => Str::slug($request->title), 
-    //          'description' => $request->description,
-    //     ]);
-    
-    //     return redirect()->route('instructor.courses.show', ['slug' => $course->slug]);
-    // }
 
     public function update(Request $request, Course $course)
     {
@@ -143,17 +100,7 @@ class CourseController extends Controller
         return redirect()->route('instructor.library');
     }
 
-//     public function destroy(course $course)
-//     {
-    
-//     $course = Course::where('slug', $slug)->firstOrFail();
 
-//     $this->authorize('delete', $course);
-
-//    $course->delete();
-
-//      return redirect()->route('instructor.library');
-//     }
 
 
 }

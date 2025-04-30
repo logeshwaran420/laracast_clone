@@ -4,14 +4,9 @@
     <x-admin.navigation />
 
 
-
-
-
-
 <div class="container mx-auto px-10 py-4">
     <div class="flex flex-col lg:flex-row gap-10 mt-6">
-        
-      <!-- Left Side: Search Form + Filters -->
+
 <div class="lg:w-1/4 w-full">
 <form action="{{ route('admin.search') }}" method="GET" class="relative mb-6">
     <input 
@@ -21,7 +16,7 @@
         value="{{ request('q') }}" 
         class="w-full px-10 py-3 rounded bg-gray-700 text-sm placeholder:text-gray-400 text-white
                focus:outline-none focus:ring-0 focus:border-transparent"
-    />
+               />
     
     <div class="absolute left-3 top-1/2 transform -translate-y-1/2 text-white">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -31,68 +26,58 @@
     </div>
 </form>
 
-<!-- Tags List -->
-<div class="mb-6">
-    <h3 class="text-white text-sm font-semibold mb-2">TOPICS</h3>
-    <div class="flex flex-wrap gap-2">
-        @foreach ($tags as $tag)
-        @php
-        $params = array_merge(request()->all(), ['tagName' => $tag->name]);
-    @endphp
-            <a 
-                href="{{ route('admin.search',$params) }}"
-                class="text-xs text-blue-400 bg-gray-800 px-3 py-1 rounded hover:bg-blue-500 hover:text-white transition"
-            >
-                #{{ $tag->name }}
-            </a>
-        @endforeach
-    </div>
-</div>
-
-<div class="mb-6">
-    <h3 class="text-white text-sm font-semibold mb-2">CATEGORIES</h3>
-    <div class="flex flex-wrap gap-2">
+<div class= 'mb-3 '>
+    <h3 class="text-white text-sm font-semibold mb-2">CATEGORIES</h3>       
+    <ul class="flex flex-wrap gap-2 mt-3">
         @foreach ($categories as $category)
-        @php
-    $params = array_merge(request()->all(), ['categoryName' => $category->name]);
-@endphp
-            <a 
-                href="{{ route( 'admin.search',$params) }}"
-                class="text-xs text-blue-400 bg-gray-800 px-3 py-1 rounded hover:bg-blue-500 hover:text-white transition"
-            >
-                {{ $category->name }}
-            </a>
+            @php
+               $isActive = request()->query('q') === $category->name;
+                $classes = $isActive
+                    ? 'text-white bg-blue-500'
+                    : 'text-blue-400 bg-gray-800 hover:bg-blue-500 hover:text-white transition';
+            @endphp
+            <li>
+                <a href="{{ route('admin.search', ['q' => $category->name]) }}"
+                   class="text-xs {{ $classes }} px-3 py-1 rounded">
+                    {{ $category->name }}
+                </a>
+            </li>
         @endforeach
-    </div>
+    </ul>
+    
 </div>
-
-
 
 <div>
-    <h3 class="text-white text-sm font-semibold mb-2">INSTRUCTOR</h3>
-    <div class="flex flex-wrap gap-2">
+    <h3 class="text-white text-sm font-semibold mb-2">INSTRUCTOR</h3>       
+    <ul class="flex flex-wrap gap-2 mt-3">
         @foreach ($instructor as $instrucor)
-
-        @php
-        $params = array_merge(request()->all(), ['instructor' => $instrucor->name]);
-    @endphp
-                <a 
-                    href="{{ route('admin.search',$params) }}"
-                class="text-xs text-blue-400 bg-gray-800 px-3 py-1 rounded hover:bg-blue-500 hover:text-white transition"
-            >
-                {{ $instrucor->name }}
-            </a>
+            @php
+               $isActive = request()->query('q') === $instrucor->name;
+                $classes = $isActive
+                    ? 'text-white bg-blue-500'
+                    : 'text-blue-400 bg-gray-800 hover:bg-blue-500 hover:text-white transition';
+            @endphp
+            <li>
+                <a href="{{ route('admin.search', ['q' => $instrucor->name]) }}"
+                   class="text-xs {{ $classes }} px-3 py-1 rounded">
+                    {{ $instrucor->name }}
+                </a>
+            </li>
         @endforeach
-    </div>
-</div>
+    </ul>
+    
 </div>
 
-        <!-- Right Side: Course Grid -->
-        
-        
-        {{-- <p class="text-blue-300 font-bold >Showing {{ $courses->count() }} results </p> --}}
+</div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10">
+<div class="lg:w-3/4 w-full">
+    @php
+        $activeCourses = $courses->where('status','1');
+    @endphp
+
+    
+    <p class="text-blue-300 font-bold px-5 py-6">Showing {{ $activeCourses->count() }} results </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10">
                 @foreach ($courses as $course)
                     <x-scroll.section 
                         :href="route('admin.courses.index', $course->slug)" 
@@ -103,7 +88,7 @@
                 @endforeach
             </div>
         </div>
-        
+    </div>
     </div>
 </div>
 

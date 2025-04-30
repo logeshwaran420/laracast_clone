@@ -47,8 +47,6 @@ class DailySubscriptionReminder extends Command
     }
 
     
-        //$this->info('Daily subscription reminders sent successfully!');
-
 
     }
 }

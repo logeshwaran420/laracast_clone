@@ -5,18 +5,17 @@
     <section class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 px-6 py-12  bg-gray-900 text-white">
         <div class="max-w-4xl mx-auto flex flex-col lg:flex-row items-start gap-12">
 
-            {{--  --}}
+     
 
             <div class="flex-shrink-0 text-center w-full lg:w-1/4">
-                <!-- Instructor Image -->
+           
                 <img 
             src="{{ asset('storage/instructors/'.$instructor->image ) }}" 
     class="w-[300px] h-[350px] object-cover shadow-lg mx-auto" 
             alt="{{ $course->instructor->name }}" 
         />
-        <button class="mt-4 bg-gray-700 text-white px-4 py-2 font-semibold w-full">More Series From Me</button>
+        <a href="{{ route('instructor',$instructor) }}" class="mt-4 bg-gray-700 text-white px-4 py-2 font-semibold w-full hover:bg-gray-600">More Series From Me</a>
         
-                <!-- Sidebar Author Card -->
                 <div class="bg-gray-800  p-6 mt-6 text-left">
                   <h2 class="text-2xl font-bold text-blue-300">{{ $instructors->name }}</h2>
                   <p class="mt-4 text-sm text-gray-300">{{ $instructor->description}}</p>
@@ -25,8 +24,7 @@
               </div>
         
               <div class="flex-1 max-w-2xl">
-                <button class="bg-gray-700 text-white text-sm px-3 py-1 rounded font-medium mb-3">↖ Browse All Series</button>
-                <h1 class="text-5xl font-extrabold text-blue-300 mb-4">{{ $course->title }}</h1>
+              <h1 class="text-5xl font-extrabold text-blue-300 mb-4">{{ $course->title }}</h1>
                 <p class="text-lg leading-relaxed mb-6 text-gray-100">
                     {{ $course->description }}
                 </p>

@@ -28,9 +28,7 @@ class="w-[300px] h-[400px] object-cover shadow-lg mx-auto"
         <a href="/instructor/library" class="bg-gray-700 text-white text-sm px-4 py-2 rounded font-medium">
           ↖ Browse Library
         </a>
-        <a href="{{ route('instructor.courses.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-          + Create New
-        </a>
+      
       </div>
 
         <h1 class="text-5xl font-extrabold text-blue-300 mb-4">{{ $course->title }}</h1>

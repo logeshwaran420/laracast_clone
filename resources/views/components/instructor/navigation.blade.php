@@ -1,4 +1,4 @@
-<!-- Fixed Navbar -->
+
 <nav class="bg-gray-900 border-b border-gray-800 py-4 px-10 fixed top-0 left-0 w-full z-50">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
         <div class="flex items-center space-x-8">
@@ -19,16 +19,13 @@
         </div>
 
         <div class="absolute left-1/2 transform -translate-x-1/2">
-            <img src="{{ Vite::asset('resources/images/logo.png') }}" alt="Logo" class="h-8">
+            <a href="/" target="_blank">    <img src="{{ Vite::asset('resources/images/logo.png') }}" alt="Logo" class="h-8"></a>
         </div>
 
 @auth
     
 <div class="flex space-x-6">
-    <!-- Search Icon Button (Gray) -->
-    <button class="text-gray-300 hover:text-white transition">
-        <i class="fas fa-search" style="font-size: 1.5rem;"></i>
-    </button>
+ 
 
     <!-- Profile Image -->
     <img src="{{ Vite::asset('resources/images/profile.png') }}" alt="Profile" class="h-8">

@@ -27,37 +27,34 @@ class TagsController extends Controller
     }
 
     public function create(Tag $tag){
-    //     $tag = Tag::where("id",$id)->firstOrFail(); 
+
         return view("admin.topic.create",compact("tag"));
     }
 
-    public function store(Request $request,Tag $tag)
-    {
-        
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-        ]);
 
+    public function store(Request $request, Tag $tag)
+{
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'required|string',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+    ]);
 
-
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('course_images', 'public');
-            
-            $imageUrl = asset('storage/' . $imagePath);
-            
-            $validated['image'] = $imageUrl;
-        }
-    
-       
-        $category = Category::create($validated);
-
-         $category->tags()->attach("tag");
-
-        return redirect()->route('admin.topics.index',
-        ["tag"=>$tag]);
+    if ($request->hasFile('image')) {
+        $imageName = time() . '.' . $request->image->extension();
+        $request->image->storeAs('images', $imageName, 'public');
+        $validated['image'] = $imageName;
     }
+
+    $category = Category::create($validated);
+
+    $category->tags()->attach($tag->id);
+
+    return redirect()->route('admin.topics.index', ["tag" => $tag]);
+}
+
+
+
 
     public function show(category $category)
     {
@@ -70,15 +67,9 @@ class TagsController extends Controller
         return view("admin.topic.show",
          compact("category", "courses") );
     }
-
-
-
-    
+  
 public function edit(category $category)
 {
-   // $category = Category::with('tags')->findOrFail($catId);
-
-  
 
    $selectedTags = $category->tags->pluck('category');
 
@@ -98,8 +89,6 @@ public function update(Request $request, Category $category)
         'tags' => 'nullable|array',
         'tags.*' => 'exists:tags,id',
     ]);
-
-    //$category = Category::findOrFail($catId);
 
     $category->name = $request->name;
     $category->description = $request->description;
@@ -127,7 +116,6 @@ public function update(Request $request, Category $category)
 
 public function add(category $category)
 {
-    //$category = Category::with('courses')->findOrFail($catId);
     $allCourses = Course::all();
     $selectedCourses = $category->courses->pluck('category'); 
 
@@ -137,14 +125,13 @@ public function add(category $category)
 public function added(Request $request, Category $category)
 {
 
-   // $category = Category::findOrFail($catId);
 
     $courseIds = $request->input('courses', []);
 
     $category->courses()->sync($courseIds);
 
 
-    return redirect()->route('admin.topics.show');
+    return redirect()->route('admin.topics.show',compact('category'));
 
 }
 

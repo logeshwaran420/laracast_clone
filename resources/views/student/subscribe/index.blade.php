@@ -12,9 +12,6 @@
     $activePlanId = auth()->user()->subscriptions()->where('is_active', operator: true)->value('plan_id');
 @endphp
 
-
-
-
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
 
     @foreach ($plans as $plan)

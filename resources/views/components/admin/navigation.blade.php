@@ -16,7 +16,7 @@
 
         <!-- Centered Logo -->
         <div class="absolute left-1/2 transform -translate-x-1/2">
-            <img src="{{ Vite::asset('resources/images/logo.png') }}" alt="Logo" class="h-8">
+            <a href="/" target="_blank">   <img src="{{ Vite::asset('resources/images/logo.png') }}" alt="Logo" class="h-8"></a>
         </div>
 
          @auth
@@ -25,8 +25,7 @@
             <a href="{{ route('admin.search') }}" class="text-gray-300 hover:text-white transition">
                 <i class="fas fa-search" style="font-size: 1.5rem;"></i>
             </a>
-
-            <img src="{{ Vite::asset('resources/images/profile.png') }}" alt="Profile" class="h-8">
+<img src="{{ Vite::asset('resources/images/profile.png') }}"  alt="Profile" class="h-8">
 
            <form action="{{ route('admin.logout') }}" method="POST">
                 @csrf

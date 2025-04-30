@@ -25,4 +25,7 @@ class Category extends Model
     {
         return 'name';  // Use the 'name' column for route model binding
     }
+    public function threads() {
+        return $this->hasMany(Thread::class);
+    }
 }

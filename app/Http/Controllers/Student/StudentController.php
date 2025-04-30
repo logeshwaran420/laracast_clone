@@ -21,17 +21,7 @@ class StudentController extends Controller
     public function index()
     {
         $data = $this->commonDataService->getcommondata();
-        // dd([
-        //     'now' => Carbon::now('UTC')->toDateTimeString(),
-        //     'ends_at' => '2025-04-24 15:00:36',
-        //     'compare' => Carbon::now('UTC')->gt(Carbon::parse('2025-04-24 15:00:36'))
-        // ]);
-
-        // $subscriptions = Subscription::where('starts_at', '<', now())->get();
-        // dd($subscriptions);
-
-        // $expiredSubscriptions = Subscription::where('ends_at', '<', Carbon::now())->get();
-        // dd($expiredSubscriptions);
+       
 
         return view('student.welcome',$data);
     }

@@ -23,9 +23,8 @@
 </div>
 
 
-
 <x-scroll.scrollbar>
-    @foreach ($courses as $course)
+        @foreach ($courses as $course)
     <x-scroll.section :title="$course->title"
          :href="route('admin.courses.index', $course)"
          img="{{ asset('storage/random_course/three.webp') }}" 
@@ -35,20 +34,24 @@
 
 </x-scroll.scrollbar>
 
+  <x-heading.sub-head>Un-Approved Courses</x-heading.sub-head>
 
-
-
-<x-heading.sub-head>Un-Aproved Courses</x-heading.sub-head>
 <x-scroll.scrollbar>
     @foreach ($unapprovedCourses as $unapprovedCourse)
     <x-scroll.section :title="$unapprovedCourse->title"
-         :href="route('admin.courses.index',['slug' => $unapprovedCourse->slug])"
+         :href="route('admin.courses.index',['course' => $unapprovedCourse->slug])"
          img="{{ asset('storage/random_course/two.webp') }}" 
          
-         />
+         >
+         
+@if ($unapprovedCourse->message)
+         {{ $unapprovedCourse->message->is_read == false ? "Progress" : 'Completed' }}
+ @endif
+        </x-scroll.section>
 
-    @endforeach
 
+
+@endforeach
 </x-scroll.scrollbar>
 
 

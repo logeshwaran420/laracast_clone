@@ -30,10 +30,8 @@ $needToFixCount = $messages->where('is_read', '0')->count();
     public function library()
     {
         $user = auth()->user();
-        // Fetch the courses that belong to the authenticated user
-        $courses = $user->courses;
+       $courses = $user->courses;
     
-        // Pass the courses and user data to the view
         return view('instructor.library.index', compact('courses', 'user'));
     }
 

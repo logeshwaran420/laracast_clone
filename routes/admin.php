@@ -21,7 +21,6 @@ Route::get('/search', [AdminController::class, 'search'])->name('search');
 
 
 Route::prefix('topic')->name('topics.')->group(function () {
-
     Route::get('/create/{tag}', [TagsController::class, 'create'])->name('create');
     Route::post('/store/{tag}', [TagsController::class, 'store'])->name('store');
     Route::get('/show/{category}', [TagsController::class, 'show'])->name('show');
@@ -29,8 +28,7 @@ Route::prefix('topic')->name('topics.')->group(function () {
     Route::put('/update/{category}', [TagsController::class, 'update'])->name('update'); 
     Route::get('/add/{category}', [TagsController::class, 'add'])->name('add');
     Route::put('/added/{category}', [TagsController::class, 'added'])->name('added');
-    Route::get('/{tag}', [TagsController::class, 'index'])->name('index');
-   
+    Route::get('/{tag}', [TagsController::class, 'index'])->name('index'); 
 });
 
 Route::prefix('course')->name('courses.')->group(function () {
@@ -47,15 +45,14 @@ Route::prefix('course')->name('courses.')->group(function () {
 });
 
 Route::prefix('member')->name('members.')->group(function () {
-
+   
     Route::get('/create', [MembersController::class,"create"])->name('create');
     Route::post('/store', [MembersController::class,"store"])->name('store');
     Route::get('/subscribed/{user}', [MembersController::class,"show"])->name('show');
-    Route::get('/unscubscribed/{user}', [MembersController::class,"show2"])->name('show2');
+    Route::get('/unsubcscribed/{user}', [MembersController::class,"show2"])->name('show2');
     Route::post('/unsubscribed/{user}', [SubscriptionReminderController::class, 'send'])->name('send');
     Route::get('/{user}', [MembersController::class,"index"])->name('index');
-
-
+    
 });
 
 
@@ -65,12 +62,10 @@ Route::prefix('member')->name('members.')->group(function () {
 
 
 
-Route::get('/remind', [MembersController::class,"remind"])->name('remind');
-
-
-Route::get('/admin/login', [AdminSessionController::class, 'create'])->name('admin.login');
-Route::post('/admin/login', [AdminSessionController::class, 'store'])->name('admin.store');
-Route::delete('/admin/logout',[AdminSessionController::class,"destroy"])->name('admin.logout');
+    Route::get('/remind', [MembersController::class,"remind"])->name('remind');
+    Route::get('/admin/login', [AdminSessionController::class, 'create'])->name('admin.login');
+    Route::post('/admin/login', [AdminSessionController::class, 'store'])->name('admin.store');
+    Route::delete('/admin/logout',[AdminSessionController::class,"destroy"])->name('admin.logout');
 
 
 

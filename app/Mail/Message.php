@@ -50,6 +50,7 @@ class Message extends Mailable
         );
    }
 
+   
     /**
      * Get the attachments for the message.
      *

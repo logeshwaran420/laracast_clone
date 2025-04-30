@@ -19,23 +19,9 @@ class BrowserController extends Controller
     {
         $this->commonDataService = $commonDataService;
     }
-//     public function index($tagName = null)
-//     {
-//         $data = $this->commonDataService->getCommonData();
-//  if ($tagName) {
-//         $tag = Tag::where('name',$tagName)->firstOrFail();
-//             $categories =$tag->categories()->get();  
-//         }
-//         else {
-//             $categories = category::all(); 
-//         }
-//         $courses = collect(); 
 
-//   return view('student.browse.index',array_merge($data, compact('categories','courses')));
 
-//     }
-
-    public function index(Tag $tag)
+    public function index(Tag $tag = null)
     {
         $data = $this->commonDataService->getCommonData();
  if ($tag) {
@@ -43,11 +29,11 @@ class BrowserController extends Controller
             $categories =$tag->categories()->get();  
         }
         else {
-            $categories = category::all(); 
+            $categories = category::all();    
         }
+        $courses = collect(); 
 
-       
-  return view('student.browse.index',array_merge($data, compact('categories',)));
+  return view('student.browse.index',array_merge($data, compact('categories','courses')));
 
     }
 
@@ -67,20 +53,7 @@ class BrowserController extends Controller
     }
     
 
-    // public function show($categoryName = null)   
-    // {       
-    //     $data = $this->commonDataService->getCommonData();
-        
-    //     $courses = collect(); 
-        
-    //     if ($categoryName) {
-    //         $category = Category::where('name', $categoryName)->firstOrFail();
-    //        $courses = $category->courses()->get();
-
-    //     } 
-    //   return view('student.browse.index', array_merge($data, compact('courses')));
-    
-    // }
+  
 
 
 

@@ -54,11 +54,11 @@
                 
        
            
-              <a href="#" class="block"> 
+              <a class="block"> 
               @foreach ($courses as $course)
                   
           
-                  <div class="bg-gray-800 py-6 px-6 rounded-xl flex items-start gap-6 hover:bg-gray-700 transition">
+                  <div class="bg-gray-800 py-6 px-6 rounded-xl flex items-start gap-6 ">
                       <div class="text-2xl font-bold text-white bg-gray-700 w-14 h-14 flex items-center justify-center rounded-full shrink-0">
                       1
                       </div>

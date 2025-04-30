@@ -38,11 +38,14 @@
                     <p class="text-lg font-semibold text-white">Stay Updated</p>
                     <p class="text-sm mt-2 text-center">Subscribe to our newsletter or follow us on social media.</p>
                     <!-- You can add a subscribe form or icons here -->
-                    <form action="{{ route('newsletter') }}" method="POST" class="mt-4 flex justify-center w-full max-w-sm">
-                        @csrf  <!-- CSRF token for protection -->
-                        <input type="email" name="email" placeholder="Your Email Address" class="p-2 border border-gray-300 focus:outline-none w-full text-sm placeholder-gray-400" required />
+                    @if(auth()->check() && auth()->user()->role === 'student')
+                    <form action="{{ route('subscribe',auth()->id()) }}" method="get" class="mt-4 flex justify-center w-full max-w-sm">
+{{-- <input type="email" name="email" disabled placeholder="Your Email Address" class="p-2 border border-gray-300 focus:outline-none w-full text-sm placeholder-gray-400" required />
+                        --}}
                         <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-2 py-2">Subscribe</button>
                     </form>
+                            
+                    @endif
                 </div>
             </div>
     

@@ -4,6 +4,11 @@
 $classes = ($active ?? false)
     ? 'text-white font-semibold'
     : 'text-gray-300 hover:text-white transition';
+
+
+
+
+    
 @endphp
 
 <li>

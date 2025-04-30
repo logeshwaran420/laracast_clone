@@ -4,7 +4,7 @@
 <x-admin.navigation/>
 <div class="flex items-center justify-center bg-gray-900 px-8 py-12">
 
-    <form action="{{ route("admin.topics.store",["id" => $tag->id]) }}" method="POST" enctype="multipart/form-data" class="w-full max-w-4xl">
+    <form action="{{ route("admin.topics.store", $tag) }}" method="POST" enctype="multipart/form-data" class="w-full max-w-4xl">
         @csrf
     
     

@@ -90,6 +90,12 @@ public function comments()
     {
         return $this->hasone(Subscription::class);
     }
+    public function threads() {
+        return $this->hasMany(Thread::class);
+    }
 
+    public function replies() {
+        return $this->hasMany(Reply::class);
+    }
     
 }

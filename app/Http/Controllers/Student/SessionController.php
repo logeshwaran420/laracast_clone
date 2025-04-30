@@ -13,7 +13,6 @@ class SessionController extends Controller
         return view('auth.login');
     }
 
-
     public function store(Request $request)
     {
        
@@ -27,7 +26,6 @@ class SessionController extends Controller
     
        
             if ($user->role === 'student') {
-                $request->session()->regenerate();
                 return redirect()->intended('/browse');
             }
      Auth::logout();

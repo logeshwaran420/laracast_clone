@@ -35,41 +35,39 @@
                         {{ $course->status ? 'Unpublish' : 'Publish' }}
                     </button>
                 </form>
-                @if ($course->status == 0)
-                <a href="{{ route('admin.courses.message',$course->slug) }}"
-   class="bg-red-600 hover:bg-red-700 text-white px-6 
-   py-3 text-sm font-semibold ">
-   Needs Fix
-</a>
-      @endif        
+               @if ($course->status == 0 && !$course->message) 
+                 <a href="{{ route('admin.courses.message', $course->slug) }}"
+                   class="px-6 py-3 text-sm font-semibold bg-red-600 hover:bg-red-700 text-white">Needs Fix</a>
+                    @endif
+
+
+
             </div>
                
                
       
               <div class="flex flex-wrap items-center justify-between gap-4 text-sm text-gray-400 bg-gray-800 p-4 rounded mb-6">             
                 <div class="flex gap-4">
-                    <span>Total Episodes {{ $lessons->count()}}</span>
+       <span>Total Episodes {{ $lessons->count()}}</span>
             
                 </div>
-    
+
+            @if ($course->status == 0 && $course->message && $course->message->is_read == 0)
+  <button class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600">On Progress</button>
+@elseif ($course->status == 0 && $course->message && $course->message->is_read == 1)
+  <button class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-500">Completed</button>
+@endif
+
+              
             </div>
     
-    
-    
-    
-    
-    
-    
             <div class="space-y-6">  
-                
-       
-           
-              <a href="#" class="block"> 
+              
+              <a class="block"> 
                   
           @foreach ($lessons as $lesson)
               
-        
-                  <div class="bg-gray-800 py-6 px-6 rounded-xl flex items-start gap-6 hover:bg-gray-700 transition">
+          <div class="bg-gray-800 py-6 px-6 rounded-xl flex items-start gap-6 ">
                       <div class="text-2xl font-bold text-white bg-gray-700 w-14 h-14 flex items-center justify-center rounded-full shrink-0">
                       {{ $lesson->position }}
                       </div>

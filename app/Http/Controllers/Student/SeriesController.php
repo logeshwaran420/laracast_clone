@@ -36,24 +36,6 @@ class SeriesController extends Controller
             'randomCourse'
         )));
     }
-    
-//     public function show($slug = null)
-// {
-//     $data = $this->commonDataService->getCommonData();
-
-//     if ($slug) {
-//         $course = Course::where('slug', $slug)->firstOrFail();
-//         $lessons = $course->lessons;
-//     } else {
-//         $lessons = collect();
-//     }   
-    
-//     $instructors = $course->instructor;
-//     $instructor = $instructors->instructor;
-
-
-//     return view("student.series.show", compact('lessons', 'course','instructors','instructor'));
-// }
 public function show(Course $course)
 {
     $lessons = $course->lessons;
@@ -66,30 +48,6 @@ public function show(Course $course)
 
 
 
-// public function showEpisode($slug = null, $position = null)
-// {
-//     $data = $this->commonDataService->getCommonData();
-
-//     $course = Course::with(['user.instructor'])
-//                     ->where('slug', $slug)
-//                     ->firstOrFail();
-
-
-//     $lessons = $course->lessons()->orderBy('position')->get();
-
-//     $currentLesson = $course->lessons()->where('position', $position)->first();
-
-//     $comments = $currentLesson ? $currentLesson->comments()->with('user')->get() : collect();
-
-//     return view("student.series.episode", array_merge($data, compact(
-//         'course',
-//         'lessons',
-//         'currentLesson',
-//         'comments'
-//     )));
-// }
-
-
 
 public function showEpisode(Course $course, Lesson $lesson = null)
 {
@@ -97,8 +55,7 @@ public function showEpisode(Course $course, Lesson $lesson = null)
 
     $lessons = $course->lessons()->orderBy('position')->get();
 
-    $currentLesson = $lesson; // Now Lesson is already loaded
-
+    $currentLesson = $lesson; 
     $comments = $currentLesson ? $currentLesson->comments()->with('user')->get() : collect();
 
     return view("student.series.episode", array_merge($data, compact(
@@ -108,22 +65,7 @@ public function showEpisode(Course $course, Lesson $lesson = null)
         'comments'
     )));
 }
-    // public function comment_store(Request $request)
-    // {
-    //     $request->validate([
-    //         'body' => 'required|string|max:1000',
-    //         'lesson_id' => 'required|exists:lessons,id',
-    //         'user_id' => 'required|exists:users,id',
-    //     ]);
-
-    //     Comment::create([
-    //         'body' => $request->body,
-    //         'lesson_id' => $request->lesson_id,
-    //         'user_id' => $request->user_id,
-    //     ]);
-
-    //     return back();
-    // }
+    
 
     public function comment_store(Request $request, Course $course, Lesson $lesson = null)
     {
@@ -143,15 +85,7 @@ public function showEpisode(Course $course, Lesson $lesson = null)
     }
 
     
-    // public function comment_destroy($slug, $position)
-    // {
-    
-    
-    //     $comment = Comment::findOrFail($position);
-    //     $comment->delete();
-    //     return back();
-    // }
-
+  
     public function comment_destroy(Course $course, Comment $comment)
     {
         $comment->delete();

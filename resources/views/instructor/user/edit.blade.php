@@ -49,7 +49,7 @@
             >
            <div class="mt-4">
     @if($instructor->image)
-        <img src="{{ asset('storage/images/' . $instructor->image) }}" alt="Profile Image"  class="w-16 h-16 object-cover rounded-full">
+        <img src="{{ asset('storage/instructors/' . $instructor->image) }}" alt="Profile Image"  class="w-16 h-16 object-cover rounded-full">
     @else
         <p>No profile image set.</p>
     @endif

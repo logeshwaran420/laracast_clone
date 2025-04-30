@@ -22,21 +22,25 @@
 </div>
 
 <x-scroll.scrollbar>
-    @foreach ($instructor as $instruct)
+      @foreach ($instructor as $instruct)
 
-@php
-  $ins = $instruct->instructor
-@endphp
+  @php
+    $ins = $instruct->instructor;
 
+  @endphp
+
+
+@if($ins)
     <x-scroll.img-section
-      img="{{ asset('storage/instructors/' . $ins->image) }} " 
+      img="{{ asset('storage/instructors/' . $ins->image) }}" 
         :href="route('admin.members.index', ['user' => $instruct->id])"
         :name="$instruct->name"
         description=""
 
       />
+      @endif
     @endforeach
-  </x-scroll.scrollbar>
+  </x-scroll.scrollbar> 
 
 
 
@@ -71,13 +75,11 @@
   @foreach($unsubscribedUsers as $unsubscribedUser)
 
 <x-scroll.img-section
-
     img="{{ vite::asset('resources/images/profile.png') }}"
     :href="route('admin.members.show2',['user' => $unsubscribedUser->id])"
     :name="$unsubscribedUser->name"
     description=""
   />
-
 @endforeach
 
 </x-scroll.scrollbar>

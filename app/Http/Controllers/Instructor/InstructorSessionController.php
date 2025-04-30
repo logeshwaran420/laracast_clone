@@ -49,7 +49,6 @@ class InstructorSessionController extends Controller
         Auth::guard('instructor')->logout(); 
         
         
-        // $request->session()->invalidate();
         $request->session()->regenerateToken();
 
 

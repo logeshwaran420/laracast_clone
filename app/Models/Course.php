@@ -39,15 +39,15 @@ class Course extends Model
     }
 
 
-    public function messages()
-{
-    return $this->hasMany(Message::class);
-}
+    public function message()
+    {
+        return $this->hasone(Message::class);
+    }
 
-public function getRouteKeyName()
-{
-    return 'slug'; 
-}
+    public function getRouteKeyName()
+    {
+        return 'slug'; 
+    }
 
 
 }

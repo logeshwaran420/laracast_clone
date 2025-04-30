@@ -24,61 +24,57 @@
         </div>
     </form>
 
-    <!-- Tags List -->
-    <div class="mb-6">
-        <h3 class="text-white text-sm font-semibold mb-2">TOPICS</h3>
-        <div class="flex flex-wrap gap-2">
-            @foreach ($tags as $tag)
-            @php
-            $params = array_merge(request()->all(), ['tagName' => $tag->name]);
-        @endphp
-                <a 
-                    href="{{ route('search',$params) }}"
-                    class="text-xs text-blue-400 bg-gray-800 px-3 py-1 rounded hover:bg-blue-500 hover:text-white transition"
-                >
-                    #{{ $tag->name }}
-                </a>
-            @endforeach
-        </div>
-    </div>
-
-    <!-- Categories List -->
-    <div class="mb-6">
-        <h3 class="text-white text-sm font-semibold mb-2">CATEGORIES</h3>
-        <div class="flex flex-wrap gap-2">
+    
+    <div class= 'mb-3 '>
+        <h3 class="text-white text-sm font-semibold mb-2">CATEGORIES</h3>       
+        <ul class="flex flex-wrap gap-2 mt-3">
             @foreach ($categories as $category)
-            @php
-        $params = array_merge(request()->all(), ['categoryName' => $category->name]);
-    @endphp
-                <a 
-                    href="{{ route('search',$params) }}"
-                    class="text-xs text-blue-400 bg-gray-800 px-3 py-1 rounded hover:bg-blue-500 hover:text-white transition"
-                >
-                    {{ $category->name }}
-                </a>
+                @php
+                   $isActive = request()->query('q') === $category->name;
+                    $classes = $isActive
+                        ? 'text-white bg-blue-500'
+                        : 'text-blue-400 bg-gray-800 hover:bg-blue-500 hover:text-white transition';
+                @endphp
+                <li>
+                    <a href="{{ route('search', ['q' => $category->name]) }}"
+                       class="text-xs {{ $classes }} px-3 py-1 rounded">
+                        {{ $category->name }}
+                    </a>
+                </li>
             @endforeach
-        </div>
+        </ul>
+        
     </div>
-
-
 
     <div>
-        <h3 class="text-white text-sm font-semibold mb-2">INSTRUCTOR</h3>
-        <div class="flex flex-wrap gap-2">
+        <h3 class="text-white text-sm font-semibold mb-2">INSTRUCTOR</h3>       
+        <ul class="flex flex-wrap gap-2 mt-3">
             @foreach ($instructor as $instrucor)
-
-            @php
-            $params = array_merge(request()->all(), ['instructor' => $instrucor->name]);
-        @endphp
-                    <a 
-                        href="{{ route('search',$params) }}"
-                    class="text-xs text-blue-400 bg-gray-800 px-3 py-1 rounded hover:bg-blue-500 hover:text-white transition"
-                >
-                    {{ $instrucor->name }}
-                </a>
+                @php
+                   $isActive = request()->query('q') === $instrucor->name;
+                    $classes = $isActive
+                        ? 'text-white bg-blue-500'
+                        : 'text-blue-400 bg-gray-800 hover:bg-blue-500 hover:text-white transition';
+                @endphp
+                <li>
+                    <a href="{{ route('search', ['q' => $instrucor->name]) }}"
+                       class="text-xs {{ $classes }} px-3 py-1 rounded">
+                        {{ $instrucor->name }}
+                    </a>
+                </li>
             @endforeach
-        </div>
+        </ul>
+        
     </div>
+
+
+
+
+
+
+
+
+    
 </div>
 
             <!-- Right Side: Course Grid -->

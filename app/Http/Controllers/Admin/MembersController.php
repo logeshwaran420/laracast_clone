@@ -20,23 +20,20 @@ class MembersController extends Controller
     {
         $this->commonDataService = $commonDataService;
     }
-    // public function index($id)
-    // {
-       
-    //     $instructor = Instructor::with('user')->where('user_id', $id)->firstOrFail();
     
-    //     $user = $instructor->user;
-    //     $messages = $user->receivedMessages()->with('sender')->get();
-    
-     
-    //     return view('admin.member.index', compact('instructor', 'messages'));
-    // }
     public function index(User $user)
     {
-        $instructor = $user->instructor()->with('user')->firstOrFail();
-        $messages = $user->receivedMessages()->with('sender')->get();
+        //$instructor = $user->instructor()->with('user')->firstOrFail();
 
-        return view('admin.member.index', compact('instructor', 'messages'));
+        $instructor = $user->instructor;
+
+        $message = $user->receivedMessages()->with('sender')->get();
+
+       $courses = $instructor->user->courses;
+
+
+
+        return view('admin.member.index', compact('instructor', 'message','courses'));
     }
 
 
@@ -83,46 +80,23 @@ class MembersController extends Controller
         return redirect()->back()->with("created");
     }
 
-    // public function show($id){
-
-
-    //     $subscription = Subscription::with('user')
-    //     ->where('user_id', $id)
-        
-    //     ->where('is_active', 1)
-    //     ->firstOrFail();
     
-
-       
-    //     $user = $subscription->user;
-
-    //     return view('admin.member.show', compact('subscription', 'user'));
-    
-    // }
     public function show(User $user)
     {
-        $subscription = Subscription::with('user')
-            ->where('user_id', $user->id)
-            ->where('is_active', 1)
-            ->firstOrFail();
+       
+      
+        $subscription = $user->subscriptions;
+
+  
+
 
         return view('admin.member.show', compact('subscription', 'user'));
     }
 
-    // public function show2($id){
 
-    //     $user = User::where('role', 'student')
-    //     ->whereDoesntHave('subscriptions')->findOrFail($id);
-
-    //     return view('admin.member.show2', compact( 'user'));
-          
-    // }
     public function show2(User $user)
     {
-        if ($user->role !== 'student' || $user->subscriptions()->exists()) {
-            abort(404);
-        }
-
+        
         return view('admin.member.show2', compact('user'));
     }
 
