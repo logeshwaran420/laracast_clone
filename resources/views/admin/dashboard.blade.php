@@ -1,11 +1,23 @@
 @extends('layout.admin')
 @section('content')
 
+
+
+
+
+
+    
     <x-admin.navigation />
+
+
 
     <x-heading.main-head :title="auth()->user()->name">
         You know the drill.
     </x-heading.main-head>
+
+
+  
+   
 
     <div class="bg-gray-900 text-white p-10">
         <div class="container mx-auto max-w-6xl">
@@ -29,5 +41,5 @@
    </div>
 
 
-
+ 
 @endsection

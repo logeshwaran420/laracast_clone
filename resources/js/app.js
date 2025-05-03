@@ -18,3 +18,6 @@ import 'swiper/css/pagination';
 
 import $ from 'jquery';
 window.$ = window.jQuery = $;
+
+
+

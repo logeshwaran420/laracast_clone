@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body class="bg-gray-900 min-h-screen flex items-center justify-center p-4">
+
+ 
     <div class="bg-gray-800 rounded-lg p-8 max-w-lg w-full shadow-lg relative">
         
         <a href="/" class="absolute top-4 right-4 text-gray-400 hover:text-gray-300 text-2xl">
@@ -24,7 +26,8 @@
                 <input 
                     type="email" 
                     id="email" 
-                    name="email"  
+                    name="email"
+                    value="{{ old('email') }}"  
                     placeholder="Enter Email" 
                     class="w-full px-1 py-2 border-0 border-b border-gray-500 focus:border-blue-500
                      focus:ring-0 bg-transparent text-white">
@@ -59,6 +62,8 @@
             
            
         </form>
+    </div>
+
     </div>
 </body>
 </html>

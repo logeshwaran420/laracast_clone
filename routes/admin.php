@@ -13,7 +13,8 @@ use App\Http\Controllers\Admin\AdminSessionController;
 Route::middleware(['auth:admin'])->prefix('admin')
 ->name("admin.")->group(function () {
 
-Route::get('/', [AdminController::class, 'index'])->name('dashboard');
+    
+    Route::get('/', [AdminController::class, 'index'])->name('dashboard');
 Route::get('/series', [AdminController::class, 'series'])->name('series');
 Route::get('/tracks', [AdminController::class, 'tracks'])->name('tracks');
 Route::get('/members', [AdminController::class, 'members'])->name('members');
@@ -61,7 +62,7 @@ Route::prefix('member')->name('members.')->group(function () {
 });
 
 
-
+// Route::get('/admin', [AdminController::class, 'index'])->name('dashboard');    
     Route::get('/remind', [MembersController::class,"remind"])->name('remind');
     Route::get('/admin/login', [AdminSessionController::class, 'create'])->name('admin.login');
     Route::post('/admin/login', [AdminSessionController::class, 'store'])->name('admin.store');

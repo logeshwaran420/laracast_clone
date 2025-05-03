@@ -8,10 +8,10 @@
     :active="request()->is('browse') || request()->is([ 'browse/*','topics/*'])">
     Topics
 </x-nav-link>
-                <x-nav-link href="/series" :active="request()->is('series/*','series')">Series</x-nav-link>
-                <x-nav-link href="/path" :active="request()->is('path')">Path</x-nav-link>
-                <x-nav-link href="/discuss" :active="request()->is('discuss','discuss/*')">Forum</x-nav-link>
-            </ul>
+<x-nav-link href="/series" :active="request()->is('series/*','series')">Series</x-nav-link>
+ <x-nav-link href="/path" :active="request()->is('path')">Path</x-nav-link>
+ <x-nav-link href="/discuss" :active="request()->is('discuss','discuss/*')">Forum</x-nav-link>
+  </ul>
         </div>
 
         <div class="absolute left-1/2 transform -translate-x-1/2">
@@ -22,16 +22,14 @@
 @auth
 
 <div class="flex space-x-6">
-    <!-- Search Icon Button (Gray) -->
+   
     <a href="{{ route('search') }}" class="text-gray-300 hover:text-white transition">
         <i class="fas fa-search" style="font-size: 1.5rem;"></i>
     </a>
 
-    <!-- Profile Image -->
-   
+    
     <img src="{{ Vite::asset('resources/images/profile.png') }}" alt="Profile" class="h-8">
-
-    <!-- Log Out Button (Gray) -->
+ 
     <form action="/logout" method="POST">        
         @csrf
         @method("DELETE")
@@ -40,21 +38,29 @@
             Log Out
         </button>
     </form>
+        
 </div>
 
 
     @endauth
 
 @guest
+
+
+
     <div class="flex items-center space-x-4">
 
-    <a href="{{ "/login" }}" class="px-6 py-2 text-gray-300 bg-gray-700  hover:bg-gray-600 hover:text-white transition">
+    <button data-modal-target="authentication-modal" 
+    data-modal-toggle="authentication-modal" 
+     class="px-6 py-2 text-gray-300 bg-gray-700  hover:bg-gray-600 hover:text-white transition">
         Sign In
-    </a>
+    </button>
 
-    <a href="{{ "/register" }}" class="px-6 py-2 text-white bg-blue-600  font-semibold shadow-md hover:bg-blue-700 transition">
+      <button data-modal-target="registration-modal" 
+    data-modal-toggle="registration-modal" 
+    class="px-6 py-2 text-white bg-blue-600  font-semibold shadow-md hover:bg-blue-700 transition">
                 Get Started
-            </a>
+</button>
             
 </div>
 

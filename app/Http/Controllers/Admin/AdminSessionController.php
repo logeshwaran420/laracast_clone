@@ -11,7 +11,7 @@ class AdminSessionController extends Controller
     
     public function create(){
 
-        return view('auth.admin.login');
+        return view('auth.admin.login')->with('modal','authentication-modal');
     }
 
 
@@ -29,9 +29,9 @@ class AdminSessionController extends Controller
 
         if ($user->role === 'admin') {
 
-            $request->session()->regenerate();
+            //$request->session()->regenerate();
 
-            return redirect()->intended('/admin');
+            return redirect('/admin');
         }
 
         Auth::guard('admin')->logout();

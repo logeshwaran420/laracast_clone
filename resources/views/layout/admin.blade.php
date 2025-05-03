@@ -14,8 +14,16 @@
 </head>
 <body class="bg-gray-900 text-white">
 
+
+    
+
+ 
+
 <main class="p-4">
+
+
     @yield('content')
+
 </main>
 
 

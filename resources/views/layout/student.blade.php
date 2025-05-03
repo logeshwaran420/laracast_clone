@@ -11,11 +11,22 @@
 
 </head>
 <body class="bg-gray-900 text-white">
+   
 
 <x-student.navigation></x-student.navigation>
 
+
+
+
 <main>
     @yield('content')
+
+
+
+
+    <x-student.authentication-modal />
+   <x-student.registration-modal />
+
 </main>
 
 <x-footer />

@@ -15,7 +15,7 @@ class SessionController extends Controller
 
     public function store(Request $request)
     {
-       
+     
         $attributes = $request->validate([
             "email" => ["required", "email"],
             "password" => ["required"]
@@ -26,25 +26,28 @@ class SessionController extends Controller
     
        
             if ($user->role === 'student') {
-                return redirect()->intended('/browse');
+                return redirect('/browse');
             }
-     Auth::logout();
+       
+    
+
             return back()->withErrors([
                 'email' => 'Access denied. Only students can log in here.',
-            ]);
+            ]) ->with('_modal', 'authentication-modal')->withInput();
+            
         }
     
        
         return back()->withErrors([
             'email' => 'We couldn\'t verify your credentials.',
-        ]);
+        ])->with('_modal', 'authentication-modal')->withInput();
     }
     
 
     public function destroy()
     {
-        Auth::logout();
-        return redirect('login'); 
+       Auth::logout();
+       return redirect('/')->with('authentication-modal', true);
     }
 
 
